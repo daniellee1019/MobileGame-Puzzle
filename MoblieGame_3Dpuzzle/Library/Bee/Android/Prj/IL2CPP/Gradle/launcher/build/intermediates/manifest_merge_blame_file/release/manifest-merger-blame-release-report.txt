@@ -109,8 +109,8 @@
 60-->[:unityLibrary] C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\release\AndroidManifest.xml:48:13-44
 61            android:resizeableActivity="false"
 61-->[:unityLibrary] C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\release\AndroidManifest.xml:49:13-47
-62            android:screenOrientation="userLandscape"
-62-->[:unityLibrary] C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\release\AndroidManifest.xml:50:13-54
+62            android:screenOrientation="portrait"
+62-->[:unityLibrary] C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\release\AndroidManifest.xml:50:13-49
 63            android:theme="@style/UnityThemeSelector" >
 63-->[:unityLibrary] C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\release\AndroidManifest.xml:51:13-54
 64            <intent-filter>

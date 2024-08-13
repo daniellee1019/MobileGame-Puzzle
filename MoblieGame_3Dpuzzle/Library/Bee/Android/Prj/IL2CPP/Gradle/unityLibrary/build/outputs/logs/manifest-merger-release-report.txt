@@ -82,15 +82,15 @@ ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\
 activity#com.unity3d.player.UnityPlayerActivity
 ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:5-22:16
 	android:screenOrientation
-		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:111-152
+		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:111-147
 	android:launchMode
-		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:153-184
+		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:148-179
 	android:hardwareAccelerated
-		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:402-437
+		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:397-432
 	android:resizeableActivity
-		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:367-401
+		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:362-396
 	android:configChanges
-		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:185-366
+		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:180-361
 	android:theme
 		ADDED from C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:69-110
 	android:name

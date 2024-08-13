@@ -82,15 +82,15 @@
 45            android:name="com.unity3d.player.UnityPlayerActivity"
 45-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:15-68
 46            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
-46-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:185-366
+46-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:180-361
 47            android:hardwareAccelerated="false"
-47-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:402-437
+47-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:397-432
 48            android:launchMode="singleTask"
-48-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:153-184
+48-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:148-179
 49            android:resizeableActivity="false"
-49-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:367-401
-50            android:screenOrientation="userLandscape"
-50-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:111-152
+49-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:362-396
+50            android:screenOrientation="portrait"
+50-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:111-147
 51            android:theme="@style/UnityThemeSelector" >
 51-->C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\AndroidManifest.xml:15:69-110
 52            <intent-filter>
