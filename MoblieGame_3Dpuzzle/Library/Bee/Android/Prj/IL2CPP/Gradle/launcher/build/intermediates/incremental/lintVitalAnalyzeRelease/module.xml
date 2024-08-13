@@ -1,0 +1,18 @@
+<lint-module
+    format="1"
+    dir="C:\Unreal_SKU_Proj\MobileGame-Puzzle\MoblieGame_3Dpuzzle\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher"
+    name=":launcher"
+    type="APP"
+    maven="Gradle:launcher:"
+    gradle="7.1.2"
+    buildFolder="build"
+    bootClassPath="C:\Androidstudio\platforms\android-30\android.jar;C:\Androidstudio\build-tools\32.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="11"
+    compileTarget="android-30"
+    neverShrinking="true">
+  <lintOptions
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>
