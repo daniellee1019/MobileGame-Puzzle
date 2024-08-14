@@ -224,6 +224,58 @@ void RegisterAllStrippedInternalCalls()
 
 	//End Registrations for type : Unity.Profiling.ProfilerRecorder
 
+	//Start Registrations for type : UnityEngine.AI.NavMeshAgent
+
+		//System.Boolean UnityEngine.AI.NavMeshAgent::SetDestination_Injected(UnityEngine.Vector3&)
+		void Register_UnityEngine_AI_NavMeshAgent_SetDestination_Injected();
+		Register_UnityEngine_AI_NavMeshAgent_SetDestination_Injected();
+
+		//System.Boolean UnityEngine.AI.NavMeshAgent::get_pathPending()
+		void Register_UnityEngine_AI_NavMeshAgent_get_pathPending();
+		Register_UnityEngine_AI_NavMeshAgent_get_pathPending();
+
+		//System.Void UnityEngine.AI.NavMeshAgent::CopyPathTo(UnityEngine.AI.NavMeshPath)
+		void Register_UnityEngine_AI_NavMeshAgent_CopyPathTo();
+		Register_UnityEngine_AI_NavMeshAgent_CopyPathTo();
+
+		//System.Void UnityEngine.AI.NavMeshAgent::set_acceleration(System.Single)
+		void Register_UnityEngine_AI_NavMeshAgent_set_acceleration();
+		Register_UnityEngine_AI_NavMeshAgent_set_acceleration();
+
+		//System.Void UnityEngine.AI.NavMeshAgent::set_angularSpeed(System.Single)
+		void Register_UnityEngine_AI_NavMeshAgent_set_angularSpeed();
+		Register_UnityEngine_AI_NavMeshAgent_set_angularSpeed();
+
+		//System.Void UnityEngine.AI.NavMeshAgent::set_autoBraking(System.Boolean)
+		void Register_UnityEngine_AI_NavMeshAgent_set_autoBraking();
+		Register_UnityEngine_AI_NavMeshAgent_set_autoBraking();
+
+		//System.Void UnityEngine.AI.NavMeshAgent::set_obstacleAvoidanceType(UnityEngine.AI.ObstacleAvoidanceType)
+		void Register_UnityEngine_AI_NavMeshAgent_set_obstacleAvoidanceType();
+		Register_UnityEngine_AI_NavMeshAgent_set_obstacleAvoidanceType();
+
+	//End Registrations for type : UnityEngine.AI.NavMeshAgent
+
+	//Start Registrations for type : UnityEngine.AI.NavMeshPath
+
+		//System.IntPtr UnityEngine.AI.NavMeshPath::InitializeNavMeshPath()
+		void Register_UnityEngine_AI_NavMeshPath_InitializeNavMeshPath();
+		Register_UnityEngine_AI_NavMeshPath_InitializeNavMeshPath();
+
+		//System.Void UnityEngine.AI.NavMeshPath::DestroyNavMeshPath(System.IntPtr)
+		void Register_UnityEngine_AI_NavMeshPath_DestroyNavMeshPath();
+		Register_UnityEngine_AI_NavMeshPath_DestroyNavMeshPath();
+
+		//UnityEngine.AI.NavMeshPathStatus UnityEngine.AI.NavMeshPath::get_status()
+		void Register_UnityEngine_AI_NavMeshPath_get_status();
+		Register_UnityEngine_AI_NavMeshPath_get_status();
+
+		//UnityEngine.Vector3[] UnityEngine.AI.NavMeshPath::CalculateCornersInternal()
+		void Register_UnityEngine_AI_NavMeshPath_CalculateCornersInternal();
+		Register_UnityEngine_AI_NavMeshPath_CalculateCornersInternal();
+
+	//End Registrations for type : UnityEngine.AI.NavMeshPath
+
 	//Start Registrations for type : UnityEngine.Android.AndroidApp
 
 		//System.IntPtr UnityEngine.Android.AndroidApp::get_UnityPlayerRaw()
@@ -3288,6 +3340,38 @@ void RegisterAllStrippedInternalCalls()
 
 	//End Registrations for type : UnityEngine.Light
 
+	//Start Registrations for type : UnityEngine.LineRenderer
+
+		//System.Void UnityEngine.LineRenderer::SetPosition_Injected(System.Int32,UnityEngine.Vector3&)
+		void Register_UnityEngine_LineRenderer_SetPosition_Injected();
+		Register_UnityEngine_LineRenderer_SetPosition_Injected();
+
+		//System.Void UnityEngine.LineRenderer::SetPositions(UnityEngine.Vector3[])
+		void Register_UnityEngine_LineRenderer_SetPositions();
+		Register_UnityEngine_LineRenderer_SetPositions();
+
+		//System.Void UnityEngine.LineRenderer::set_endColor_Injected(UnityEngine.Color&)
+		void Register_UnityEngine_LineRenderer_set_endColor_Injected();
+		Register_UnityEngine_LineRenderer_set_endColor_Injected();
+
+		//System.Void UnityEngine.LineRenderer::set_endWidth(System.Single)
+		void Register_UnityEngine_LineRenderer_set_endWidth();
+		Register_UnityEngine_LineRenderer_set_endWidth();
+
+		//System.Void UnityEngine.LineRenderer::set_positionCount(System.Int32)
+		void Register_UnityEngine_LineRenderer_set_positionCount();
+		Register_UnityEngine_LineRenderer_set_positionCount();
+
+		//System.Void UnityEngine.LineRenderer::set_startColor_Injected(UnityEngine.Color&)
+		void Register_UnityEngine_LineRenderer_set_startColor_Injected();
+		Register_UnityEngine_LineRenderer_set_startColor_Injected();
+
+		//System.Void UnityEngine.LineRenderer::set_startWidth(System.Single)
+		void Register_UnityEngine_LineRenderer_set_startWidth();
+		Register_UnityEngine_LineRenderer_set_startWidth();
+
+	//End Registrations for type : UnityEngine.LineRenderer
+
 	//Start Registrations for type : UnityEngine.Material
 
 		//System.Boolean UnityEngine.Material::HasProperty(System.Int32)
@@ -4530,6 +4614,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Renderer_get_sortingOrder();
 		Register_UnityEngine_Renderer_get_sortingOrder();
 
+		//System.Void UnityEngine.Renderer::SetMaterial(UnityEngine.Material)
+		void Register_UnityEngine_Renderer_SetMaterial();
+		Register_UnityEngine_Renderer_SetMaterial();
+
 		//System.Void UnityEngine.Renderer::get_bounds_Injected(UnityEngine.Bounds&)
 		void Register_UnityEngine_Renderer_get_bounds_Injected();
 		Register_UnityEngine_Renderer_get_bounds_Injected();
@@ -5318,9 +5406,9 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Rigidbody_set_isKinematic();
 		Register_UnityEngine_Rigidbody_set_isKinematic();
 
-		//System.Void UnityEngine.Rigidbody::set_velocity_Injected(UnityEngine.Vector3&)
-		void Register_UnityEngine_Rigidbody_set_velocity_Injected();
-		Register_UnityEngine_Rigidbody_set_velocity_Injected();
+		//System.Void UnityEngine.Rigidbody::set_useGravity(System.Boolean)
+		void Register_UnityEngine_Rigidbody_set_useGravity();
+		Register_UnityEngine_Rigidbody_set_useGravity();
 
 	//End Registrations for type : UnityEngine.Rigidbody
 

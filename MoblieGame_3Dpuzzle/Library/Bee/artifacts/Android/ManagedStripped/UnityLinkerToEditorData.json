@@ -2,6 +2,41 @@
   "report": {
     "modules": [
       {
+        "name": "AI",
+        "dependencies": [
+          {
+            "name": "NavMeshAgent",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
+            "name": "NavMeshData",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
+            "name": "NavMeshProjectSettings",
+            "scenes": [],
+            "dependencyType": 1,
+            "icon": null
+          },
+          {
+            "name": "NavMeshSettings",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 1,
+            "icon": null
+          }
+        ]
+      },
+      {
         "name": "AndroidJNI",
         "dependencies": []
       },
@@ -253,6 +288,14 @@
             "icon": null
           },
           {
+            "name": "LineRenderer",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "LowerResBlitTexture",
             "scenes": [],
             "dependencyType": 0,
@@ -483,6 +526,12 @@
             "scenes": [],
             "dependencyType": 1,
             "icon": null
+          },
+          {
+            "name": "Required by AI Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.ai"
           },
           {
             "name": "Required by AndroidJNI Module",
@@ -848,6 +897,12 @@
       {
         "name": "SharedInternals",
         "dependencies": [
+          {
+            "name": "Required by AI Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.ai"
+          },
           {
             "name": "Required by AndroidJNI Module",
             "scenes": [],

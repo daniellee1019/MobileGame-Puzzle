@@ -1,8 +1,10 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Terresquall.PlayerMovement
+    - PlayerInteractionManager
+    - PlayerMovement
     - Terresquall.VirtualJoystick
+    - TurretController
     Cinemachine.dll:
     - Cinemachine.CinemachineBrain
     - Cinemachine.CinemachineComposer
@@ -91,6 +93,8 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -249,6 +253,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 18416}
     - Class: 114
+      Script: {instanceID: 18522}
+    - Class: 114
       Script: {instanceID: 18628}
     - Class: 114
       Script: {instanceID: 18688}
@@ -315,6 +321,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 23984}
     - Class: 114
+      Script: {instanceID: 24082}
+    - Class: 114
       Script: {instanceID: 24098}
     - Class: 114
       Script: {instanceID: 24262}
@@ -342,13 +350,21 @@ ScriptsOnlyBuild:
       Script: {instanceID: 28090}
     - Class: 114
       Script: {instanceID: 29934}
+    - Class: 114
+      Script: {instanceID: 34374}
+    - Class: 114
+      Script: {instanceID: 34400}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 120
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 195
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
@@ -359,6 +375,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 238
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -2031,10 +2049,22 @@ ScriptsOnlyBuild:
     className: VirtualJoystick
   - hash:
       serializedVersion: 2
-      Hash: 5c824383dd821d96b54658f3ea231892
+      Hash: 7bf4b5beb181eb73796c29779b8d6a52
     assemblyName: Assembly-CSharp
-    namespaceName: Terresquall
+    namespaceName: 
     className: PlayerMovement
+  - hash:
+      serializedVersion: 2
+      Hash: f69f0dbf15538677cc90aee1887bd6bb
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TurretController
+  - hash:
+      serializedVersion: 2
+      Hash: 3984997ad12a543bc670c0c35236d1a6
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: PlayerInteractionManager
   platform: 13
   scenePathNames:
   - Assets/01.Scenes/SampleScene.unity

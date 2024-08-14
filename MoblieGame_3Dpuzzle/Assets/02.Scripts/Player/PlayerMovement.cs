@@ -1,48 +1,114 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-namespace Terresquall
+public class PlayerMovement : MonoBehaviour
 {
-    public class PlayerMovement : MonoBehaviour
+    private NavMeshAgent agent;
+    private LineRenderer lineRenderer;
+    private Camera mainCamera;
+
+    void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        lineRenderer = GetComponent<LineRenderer>();
+        mainCamera = Camera.main;
 
-        public float maxSpeed = 5f; // 플레이어의 최대 속도
-        private Rigidbody rb;
-        private VirtualJoystick joystick;
-
-        void Start()
+        if (agent == null)
         {
-            // Rigidbody를 가져옵니다. 3D 게임에서는 Rigidbody를 사용해야 합니다.
-            rb = GetComponent<Rigidbody>();
-            if (rb == null)
-            {
-                Debug.LogError("Rigidbody component is missing from the player object.");
-            }
+            Debug.LogError("NavMeshAgent가 플레이어에 추가되지 않았습니다.");
+        }
 
-            // 씬에 있는 VirtualJoystick을 찾아 연결합니다.
-            joystick = FindObjectOfType<VirtualJoystick>();
-            if (joystick == null)
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        lineRenderer.positionCount = 0;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.red;
+
+        // NavMeshAgent 설정 조정
+        agent.acceleration = 20f; // 가속도를 높여 장애물을 피할 때 속도를 유지
+        agent.angularSpeed = 360f; // 회전 속도를 높여 빠르게 방향 전환
+        agent.autoBraking = false; // 목적지 근처에서도 속도 유지
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance; // 장애물 회피 설정
+    }
+
+    void Update()
+    {
+        HandleTouchInput();
+        UpdatePathLine();
+    }
+
+    private void HandleTouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
             {
-                Debug.LogError("No VirtualJoystick found in the scene. Please add one.");
+                Ray ray = mainCamera.ScreenPointToRay(touch.position);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    agent.SetDestination(hit.point);
+                    UpdatePathLine();
+                }
+            }
+        }
+    }
+
+    private void UpdatePathLine()
+    {
+        if (agent.pathPending)
+            return;
+
+        NavMeshPath path = agent.path;
+
+        if (path.status == NavMeshPathStatus.PathComplete)
+        {
+            lineRenderer.positionCount = path.corners.Length;
+            lineRenderer.SetPositions(path.corners);
+        }
+
+        // 이미 이동한 경로를 제거하고 남은 경로만 표시
+        Vector3[] remainingPath = GetRemainingPath();
+        lineRenderer.positionCount = remainingPath.Length;
+        lineRenderer.SetPositions(remainingPath);
+    }
+
+    private Vector3[] GetRemainingPath()
+    {
+        if (agent.path.corners.Length == 0)
+            return new Vector3[0];
+
+        Vector3 playerPosition = transform.position;
+        Vector3[] fullPath = agent.path.corners;
+
+        int startIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < fullPath.Length; i++)
+        {
+            float distance = Vector3.Distance(playerPosition, fullPath[i]);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                startIndex = i;
             }
         }
 
-        void Update()
+        Vector3[] remainingPath = new Vector3[fullPath.Length - startIndex];
+        for (int i = startIndex; i < fullPath.Length; i++)
         {
-            if (joystick != null)
-            {
-                MovePlayer();
-            }
+            remainingPath[i - startIndex] = fullPath[i];
         }
 
-        private void MovePlayer()
-        {
-            // 조이스틱 입력을 받아 이동 방향과 속도를 계산합니다.
-            Vector2 input = joystick.GetAxis();
-            float speedFactor = input.magnitude; // 조이스틱 이동 거리 비율에 따라 속도 조절
-            Vector3 moveDirection = new Vector3(input.x, 0, input.y) * speedFactor * maxSpeed;
-
-            // Rigidbody를 사용하여 플레이어를 이동시킵니다.
-            rb.velocity = moveDirection;
-        }
+        return remainingPath;
     }
 }
