@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     private NavMeshAgent agent;
     private LineRenderer lineRenderer;
     private Camera mainCamera;
+    private bool canMove = true; // 플레이어가 이동할 수 있는지 여부를 제어하는 플래그
 
     void Start()
     {
@@ -39,8 +40,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        HandleTouchInput();
-        UpdatePathLine();
+        if (canMove)
+        {
+            HandleTouchInput();
+            UpdatePathLine();
+        }
+        //UpdatePathLine();
     }
 
     private void HandleTouchInput()
@@ -110,5 +115,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return remainingPath;
+    }
+
+    // 플레이어 이동을 허용하는 메서드
+    public void EnableMovement()
+    {
+        canMove = true;
+        agent.isStopped = false; // NavMeshAgent 동작 재개
+    }
+
+    // 플레이어 이동을 차단하는 메서드
+    public void DisableMovement()
+    {
+        canMove = false;
+        agent.isStopped = true; // NavMeshAgent 동작 중지
+        lineRenderer.positionCount = 0; // 경로 표시 제거
     }
 }

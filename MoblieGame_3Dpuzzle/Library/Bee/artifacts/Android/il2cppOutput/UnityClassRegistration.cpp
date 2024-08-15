@@ -175,6 +175,7 @@ class Physics2DSettings; template <> void RegisterUnityClass<Physics2DSettings>(
 class PolygonCollider2D; template <> void RegisterUnityClass<PolygonCollider2D>(const char*);
 class Rigidbody2D; template <> void RegisterUnityClass<Rigidbody2D>(const char*);
 namespace TextRendering { class Font; } template <> void RegisterUnityClass<TextRendering::Font>(const char*);
+namespace TextRenderingPrivate { class TextMesh; } template <> void RegisterUnityClass<TextRenderingPrivate::TextMesh>(const char*);
 namespace UI { class Canvas; } template <> void RegisterUnityClass<UI::Canvas>(const char*);
 namespace UI { class CanvasGroup; } template <> void RegisterUnityClass<UI::CanvasGroup>(const char*);
 namespace UI { class CanvasRenderer; } template <> void RegisterUnityClass<UI::CanvasRenderer>(const char*);
@@ -187,7 +188,7 @@ void RegisterAllClasses()
 {
 void RegisterBuiltinTypes();
 RegisterBuiltinTypes();
-	//Total: 97 non stripped classes
+	//Total: 98 non stripped classes
 	//0. NavMeshAgent
 	RegisterUnityClass<NavMeshAgent>("AI");
 	//1. NavMeshData
@@ -368,19 +369,21 @@ RegisterBuiltinTypes();
 	RegisterUnityClass<Rigidbody2D>("Physics2D");
 	//89. Font
 	RegisterUnityClass<TextRendering::Font>("TextRendering");
-	//90. Canvas
+	//90. TextMesh
+	RegisterUnityClass<TextRenderingPrivate::TextMesh>("TextRendering");
+	//91. Canvas
 	RegisterUnityClass<UI::Canvas>("UI");
-	//91. CanvasGroup
+	//92. CanvasGroup
 	RegisterUnityClass<UI::CanvasGroup>("UI");
-	//92. CanvasRenderer
+	//93. CanvasRenderer
 	RegisterUnityClass<UI::CanvasRenderer>("UI");
-	//93. VFXManager
+	//94. VFXManager
 	RegisterUnityClass<VFXManager>("VFX");
-	//94. VisualEffect
+	//95. VisualEffect
 	RegisterUnityClass<VisualEffect>("VFX");
-	//95. VisualEffectAsset
+	//96. VisualEffectAsset
 	RegisterUnityClass<VisualEffectAsset>("VFX");
-	//96. VisualEffectObject
+	//97. VisualEffectObject
 	RegisterUnityClass<VisualEffectObject>("VFX");
 
 }

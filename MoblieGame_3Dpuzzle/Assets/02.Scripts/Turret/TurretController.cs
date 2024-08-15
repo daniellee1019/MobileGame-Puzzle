@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class TurretController : MonoBehaviour, IInteractable
 {
     public Transform lightOrigin;
-    public float lightRange = 10f;
+    public float lightRange = 100f; // 빛의 최대 범위를 늘립니다.
     public LineRenderer lineRenderer;
     public Transform turretPosition; // 플레이어가 포탑에 탈 때 위치할 자리
     public float dismountCooldown = 3f;
@@ -43,16 +43,35 @@ public class TurretController : MonoBehaviour, IInteractable
 
     private void ShootLight()
     {
-        lineRenderer.SetPosition(0, lightOrigin.position);
-        RaycastHit hit;
+        Vector3 origin = lightOrigin.position;
+        Vector3 direction = lightOrigin.forward;
 
-        if (Physics.Raycast(lightOrigin.position, lightOrigin.forward, out hit, lightRange))
+        Ray ray = new Ray(origin, direction);
+        RaycastHit hit;
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0, origin);
+
+        while (Physics.Raycast(ray, out hit, lightRange))
         {
-            lineRenderer.SetPosition(1, hit.point);
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+
+            Mirror mirror = hit.collider.GetComponent<Mirror>();
+            if (mirror != null)
+            {
+                mirror.ReflectLight(ray, out ray); // 거울에 따라 빛을 반사/굴절/증폭
+            }
+            else
+            {
+                break; // 거울이 아닌 다른 물체에 닿으면 빛이 멈춤
+            }
         }
-        else
+
+        // 최종 빛의 끝점을 설정
+        if (lineRenderer.positionCount == 1)
         {
-            lineRenderer.SetPosition(1, lightOrigin.position + lightOrigin.forward * lightRange);
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(1, origin + direction * lightRange);
         }
     }
 

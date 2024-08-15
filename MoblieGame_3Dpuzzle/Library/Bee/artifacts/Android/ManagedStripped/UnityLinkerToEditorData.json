@@ -1104,6 +1104,12 @@
             "icon": null
           },
           {
+            "name": "TextMesh",
+            "scenes": [],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "Required by IMGUI Module",
             "scenes": [],
             "dependencyType": 2,
