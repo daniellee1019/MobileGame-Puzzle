@@ -13,6 +13,7 @@ public class TurretController : MonoBehaviour, IInteractable
     private bool isMounted = false;
     private bool canMount = true;
     private GameObject player;
+    private Camera mainCamera;
 
     void Start()
     {
@@ -26,10 +27,17 @@ public class TurretController : MonoBehaviour, IInteractable
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.green;
         lineRenderer.endColor = Color.red;
+
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
+        if (isMounted)
+        {
+            ControlLightDirection();
+        }
+
         ShootLight();
     }
 
@@ -112,5 +120,28 @@ public class TurretController : MonoBehaviour, IInteractable
         canMount = false;
         yield return new WaitForSeconds(dismountCooldown);
         canMount = true;
+    }
+
+    private void ControlLightDirection()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Began)
+            {
+                Ray ray = mainCamera.ScreenPointToRay(touch.position);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Vector3 direction = hit.point - lightOrigin.position;
+                    direction.y = 0; // 수평 방향만 고려
+
+                    Quaternion rotation = Quaternion.LookRotation(direction);
+                    lightOrigin.rotation = Quaternion.Slerp(lightOrigin.rotation, rotation, Time.deltaTime * 10f);
+                }
+            }
+        }
     }
 }
