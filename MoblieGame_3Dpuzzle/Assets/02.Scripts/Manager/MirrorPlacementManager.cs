@@ -72,9 +72,20 @@ public class MirrorPlacementManager : MonoBehaviour
         // 거울의 로테이션을 (0, 0, 0)으로 설정
         currentMirrorPreview.transform.rotation = Quaternion.identity;
 
-        // 거울의 위치를 Y축으로 4.5 유닛 위로 설정
-        Vector3 initialPosition = currentMirrorPreview.transform.position;
-        currentMirrorPreview.transform.position = new Vector3(initialPosition.x, 4.5f, initialPosition.z);
+        // 터치 위치로부터 Ray를 쏴서 터치 지점의 위치를 가져오기
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 touchPosition = hit.point;
+            // 거울의 위치를 터치 위치의 X, Z 값과 Y축 4.5로 설정
+            currentMirrorPreview.transform.position = new Vector3(touchPosition.x, 4.5f, touchPosition.z);
+        }
+        else
+        {
+            // 터치 위치가 설정되지 않은 경우의 기본 위치 처리 (예: 화면 중앙 또는 특정 위치)
+            currentMirrorPreview.transform.position = new Vector3(0, 4.5f, 0);
+        }
 
         currentMirrorPreview.GetComponent<Collider>().enabled = false; // 충돌 비활성화 (미리보기 상태)
 
@@ -87,6 +98,7 @@ public class MirrorPlacementManager : MonoBehaviour
 
         isDragging = true;
     }
+
 
     private void StopDraggingMirror()
     {

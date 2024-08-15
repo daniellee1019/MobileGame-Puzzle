@@ -51,29 +51,66 @@ public class TurretController : MonoBehaviour, IInteractable
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, origin);
 
-        while (Physics.Raycast(ray, out hit, lightRange))
-        {
-            lineRenderer.positionCount++;
-            lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+        Mirror lastHitMirror = null;  // 이전에 충돌한 거울을 저장
 
-            Mirror mirror = hit.collider.GetComponent<Mirror>();
-            if (mirror != null)
+        while (true)
+        {
+            // Ray가 충돌하는지 확인
+            if (Physics.Raycast(ray, out hit, lightRange))
             {
-                mirror.ReflectLight(ray, out ray); // 거울에 따라 빛을 반사/굴절/증폭
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+
+                // Mirror 클래스나 자식 클래스를 확인
+                if (hit.collider.TryGetComponent<Mirror>(out Mirror mirror))
+                {
+                    // 이전에 충돌한 거울과 같으면 루프 종료
+                    if (mirror == lastHitMirror)
+                    {
+                        break;
+                    }
+
+                    // 현재 충돌한 거울을 기록
+                    lastHitMirror = mirror;
+
+                    // 현재 충돌한 지점에서 약간의 오프셋 적용
+                    ray.origin = hit.point + hit.normal * 0.01f;
+
+                    // Mirror의 자식 클래스에 따라 반사, 굴절, 증폭을 처리
+                    if (mirror is ReflectingMirror reflectingMirror)
+                    {
+                        reflectingMirror.ReflectLight(ray, out ray);
+                    }
+                    else if (mirror is RefractingMirror refractingMirror)
+                    {
+                        refractingMirror.ReflectLight(ray, out ray);
+                    }
+                    else if (mirror is AmplifyingMirror amplifyingMirror)
+                    {
+                        amplifyingMirror.ReflectLight(ray, out ray);
+                    }
+                    else
+                    {
+                        break; // 처리되지 않은 경우 종료
+                    }
+                }
+                else
+                {
+                    break; // 거울이 아닌 다른 물체에 닿으면 빛이 멈춤
+                }
             }
             else
             {
-                break; // 거울이 아닌 다른 물체에 닿으면 빛이 멈춤
+                // Ray가 아무것도 맞지 않을 경우 끝점을 설정
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, ray.origin + ray.direction * lightRange);
+                break;
             }
         }
-
-        // 최종 빛의 끝점을 설정
-        if (lineRenderer.positionCount == 1)
-        {
-            lineRenderer.positionCount++;
-            lineRenderer.SetPosition(1, origin + direction * lightRange);
-        }
     }
+
+
+
 
     public void Interact(GameObject player)
     {
