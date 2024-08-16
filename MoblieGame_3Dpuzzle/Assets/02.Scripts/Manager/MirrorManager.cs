@@ -3,15 +3,19 @@ using UnityEngine.UI;
 
 public class MirrorManager : MonoBehaviour
 {
+    private Camera mainCamera;
+    private PlayerMovement playerMovement; // 플레이어 컨트롤러 참조
     public GameObject hammerCursor; // 망치 커서 이미지
     public Button restoreModeButton; // 리스토어 모드를 활성화하는 버튼
+
     private bool isRestoreMode = false; // 리스토어 모드 활성화 여부
-    private Camera mainCamera;
-    public PlayerMovement playerMovement; // 플레이어 이동을 제어하는 스크립트 참조
 
     void Start()
     {
         mainCamera = Camera.main;
+
+        // 플레이어 찾기
+        FindPlayer();
 
         // 리스토어 모드 버튼에 이벤트 리스너 추가
         restoreModeButton.onClick.AddListener(ToggleRestoreMode);
@@ -22,6 +26,11 @@ public class MirrorManager : MonoBehaviour
 
     void Update()
     {
+        if (playerMovement == null)
+        {
+            FindPlayer();
+        }
+
         if (isRestoreMode && Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -49,6 +58,11 @@ public class MirrorManager : MonoBehaviour
             Vector3 cursorPosition = mainCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, mainCamera.nearClipPlane));
             hammerCursor.transform.position = new Vector3(cursorPosition.x, cursorPosition.y, hammerCursor.transform.position.z);
         }
+    }
+    private void FindPlayer()
+    {
+        // ObjectManager를 통해 플레이어 참조
+        playerMovement = ObjectManager.Instance.player;
     }
 
     private void ToggleRestoreMode()

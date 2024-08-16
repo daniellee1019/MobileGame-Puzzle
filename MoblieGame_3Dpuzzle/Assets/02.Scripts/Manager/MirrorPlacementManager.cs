@@ -4,15 +4,17 @@ using UnityEngine.EventSystems;
 
 public class MirrorPlacementManager : MonoBehaviour
 {
-    public GameObject[] mirrorPrefabs; // 거울 프리팹 배열
     public LayerMask placementLayerMask; // 거울을 설치할 수 있는 레이어
-    public Button[] mirrorButtons; // 버튼 배열 (ReflectingButton, RefractingButton, AmplifyingButton 등)
-    public GameObject rotationGizmoPrefab; // 회전 기즈모 프리팹
-    public PlayerMovement playerMovement; // 플레이어 컨트롤러 참조
 
+    public Button[] mirrorButtons; // 버튼 배열 (ReflectingButton, RefractingButton, AmplifyingButton 등)
+    private Camera mainCamera;
+    private PlayerMovement playerMovement; // 플레이어 컨트롤러 참조
+
+    public GameObject[] mirrorPrefabs; // 거울 프리팹 배열
+    public GameObject rotationGizmoPrefab; // 회전 기즈모 프리팹
     private GameObject currentMirrorPreview;
     private GameObject currentGizmo;
-    private Camera mainCamera;
+
     private bool isPlacing = false;
     private bool isRotating = false;
     private bool isDragging = false;
@@ -21,6 +23,9 @@ public class MirrorPlacementManager : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+
+        // 플레이어 찾기
+        FindPlayer();
 
         // 각 버튼에 이벤트 리스너를 추가
         for (int i = 0; i < mirrorButtons.Length; i++)
@@ -44,6 +49,11 @@ public class MirrorPlacementManager : MonoBehaviour
 
     void Update()
     {
+        if (playerMovement == null)
+        {
+            FindPlayer();
+        }
+
         if (isDragging)
         {
             HandleMirrorDragging();
@@ -56,6 +66,11 @@ public class MirrorPlacementManager : MonoBehaviour
         {
             HandleMirrorRotation();
         }
+    }
+    private void FindPlayer()
+    {
+        // ObjectManager를 통해 플레이어 참조
+        playerMovement = ObjectManager.Instance.player;
     }
 
     private void StartDraggingMirror(int mirrorIndex)

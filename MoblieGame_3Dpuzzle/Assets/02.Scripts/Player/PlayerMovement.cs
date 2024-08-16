@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour
     private Camera mainCamera;
     private bool canMove = true; // 플레이어가 이동할 수 있는지 여부를 제어하는 플래그
 
+    private void Awake()
+    {
+        // 적을 ObjectManager에 등록
+        ObjectManager.Instance.RegisterPlayer(this);
+    }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
