@@ -15,13 +15,6 @@ public class TurretController : MonoBehaviour, IInteractable
     private GameObject player;
     private Camera mainCamera;
 
-
-    private void Awake()
-    {
-        // 터렛 초기화 코드
-        ObjectManager.Instance.RegisterTurret(this);
-    }
-
     void Start()
     {
 

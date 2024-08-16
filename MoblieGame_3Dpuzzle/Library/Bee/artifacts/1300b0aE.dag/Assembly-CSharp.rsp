@@ -332,7 +332,6 @@
 -r:"Library/Bee/artifacts/1300b0aE.dag/Cinemachine.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/com.unity.cinemachine.editor.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Gentleland.SteampunkUI.DemoAndExample.ref.dll"
--r:"Library/Bee/artifacts/1300b0aE.dag/Gentleland.Utils.SteampunkUI.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/PPv2URPConverters.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Unity.AI.Navigation.Editor.ref.dll"

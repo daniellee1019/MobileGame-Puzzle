@@ -6,18 +6,34 @@ public class StageManager : MonoBehaviour
     public Stage currentStage; // 현재 스테이지를 enum으로 관리
     public EnemyAI[] stageEnemiesPrefabs; // 각 스테이지에 맞는 적 프리팹 배열 (스테이지별로 하나씩)
 
+    private TurretController turret;
     private List<GameObject> currentEnemies = new List<GameObject>(); // 현재 스테이지의 적들을 관리하는 리스트
 
     private void Start()
     {
+        FindTurret();
+
         Debug.Log("Start: Initializing stage: " + currentStage); // 초기화 로그 추가
         InitializeStage(currentStage);
+    }
+
+    private void Update()
+    {
+        if (turret == null)
+        {
+            FindTurret();
+        }
     }
 
     private void OnValidate()
     {
         // 인스펙터에서 currentStage가 변경될 때마다 호출
-        InitializeStage(currentStage);
+        //InitializeStage(currentStage);
+    }
+    private void FindTurret()
+    {
+        // ObjectManager를 통해 플레이어 참조
+        turret = ObjectManager.Instance.turret;
     }
 
     public void InitializeStage(Stage stage)
@@ -28,9 +44,6 @@ public class StageManager : MonoBehaviour
         ClearCurrentEnemies();
 
         int stageIndex = (int)stage - 1; // Enum 값에서 인덱스를 얻기 위해 1을 뺌
-
-        // 터렛을 ObjectManager에서 가져옴
-        TurretController turret = ObjectManager.Instance.turret;
 
         if (turret == null)
         {
