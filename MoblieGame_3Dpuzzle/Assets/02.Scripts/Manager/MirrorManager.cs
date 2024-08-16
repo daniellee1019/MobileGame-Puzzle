@@ -7,6 +7,7 @@ public class MirrorManager : MonoBehaviour
     public Button restoreModeButton; // 리스토어 모드를 활성화하는 버튼
     private bool isRestoreMode = false; // 리스토어 모드 활성화 여부
     private Camera mainCamera;
+    public PlayerMovement playerMovement; // 플레이어 이동을 제어하는 스크립트 참조
 
     void Start()
     {
@@ -58,11 +59,13 @@ public class MirrorManager : MonoBehaviour
         {
             // 망치 커서를 활성화
             hammerCursor.SetActive(true);
+            playerMovement.DisableMovement(); // 플레이어 이동 비활성화
         }
         else
         {
             // 망치 커서를 비활성화
             hammerCursor.SetActive(false);
+            playerMovement.EnableMovement(); // 플레이어 이동 활성화
         }
     }
 }

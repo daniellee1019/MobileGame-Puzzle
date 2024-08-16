@@ -138,9 +138,6 @@ public class MirrorPlacementManager : MonoBehaviour
     {
         isPlacing = true;
         currentMirrorPreview.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f); // 원래 색으로 복구
-
-        // 플레이어의 움직임 활성화를 제거합니다.
-        // playerMovement.EnableMovement();
     }
 
     private void HandleMirrorPlacement()

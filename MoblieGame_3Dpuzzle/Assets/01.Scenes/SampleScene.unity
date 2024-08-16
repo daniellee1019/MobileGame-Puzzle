@@ -975,6 +975,7 @@ MonoBehaviour:
   hammerCursor: {fileID: 384868906944353530, guid: 5b3d2ed46a1dbd746bba3ebd142c6637,
     type: 3}
   restoreModeButton: {fileID: 2011324067}
+  playerMovement: {fileID: 1455228484}
 --- !u!1 &548125948
 GameObject:
   m_ObjectHideFlags: 0
