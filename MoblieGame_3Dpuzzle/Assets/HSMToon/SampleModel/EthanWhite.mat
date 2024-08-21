@@ -2,15 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: EthanWhite
   m_Shader: {fileID: 4800000, guid: ca0070cc9352e254887ea4cb417f0c23, type: 3}
-  m_ShaderKeywords: _EMISSION _LIGHTMAPPING_STATIC_LIGHTMAPS _NORMALMAP _RIMLIGHT_ON
-    _SPECULAR_ON _UVPRIM_UV1 _UVSEC_UV1
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _NORMALMAP
+  - _RIMLIGHT_ON
+  - _SPECULAR_ON
+  m_InvalidKeywords:
+  - _EMISSION
+  - _LIGHTMAPPING_STATIC_LIGHTMAPS
+  - _UVPRIM_UV1
+  - _UVSEC_UV1
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -18,6 +27,7 @@ Material:
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -93,6 +103,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4e2f32e9a1fefc24092337ae061f3dbc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaClip: 0
     - _AlphaTestRef: 0.5
@@ -107,9 +118,9 @@ Material:
     - _DetailMode: 0
     - _DetailNormalMapScale: 1
     - _DissolveFade: 0
-    - _DissolveIntensity: 6.4
+    - _DissolveIntensity: 13.5
     - _DissolveSmooth: 0.056
-    - _DissolveStep: 0.01
+    - _DissolveStep: 0
     - _DitherFade: 0
     - _DstBlend: 0
     - _Emission: 0
@@ -132,7 +143,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutLine: 1
-    - _OutLineWidth: 0.005
+    - _OutLineWidth: 0.003
     - _Parallax: 0.02
     - _RenderQueueMode: 0
     - _RenderQueueValue: 2000
@@ -160,12 +171,14 @@ Material:
     - _StencilOpPass: 0
     - _UVPrim: 0
     - _UVSec: 0
+    - _UseMetallicRimLight: 0
+    - _UseMetallicSpecular: 0
     - _ZWrite: 1
     - _ZWriteMode: 1
     m_Colors:
     - _BaseColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DissolveColor: {r: 1, g: 0.33389878, b: 0, a: 1}
+    - _DissolveColor: {r: 1, g: 0.33333334, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 0.99999994}
     - _EmissionColorUI: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColorWithMapUI: {r: 1, g: 1, b: 1, a: 1}
