@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EthanWhite
+  m_Shader: {fileID: 4800000, guid: ca0070cc9352e254887ea4cb417f0c23, type: 3}
+  m_ShaderKeywords: _EMISSION _LIGHTMAPPING_STATIC_LIGHTMAPS _NORMALMAP _RIMLIGHT_ON
+    _SPECULAR_ON _UVPRIM_UV1 _UVSEC_UV1
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AOMap:
+        m_Texture: {fileID: 2800000, guid: 4e2f32e9a1fefc24092337ae061f3dbc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 3b5b7be0f2332c24f89a2af018daa62d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ClippingMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 8900000, guid: 6c5668bb9f9669342bfdd3eaddebb56b, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveMap:
+        m_Texture: {fileID: 2800000, guid: f1c791807fd39534ca42e61cf73cbbe7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 0ca09a4614a0daa44ba043de90181896, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCapTextureMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion:
+        m_Texture: {fileID: 2800000, guid: 4e2f32e9a1fefc24092337ae061f3dbc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 4e2f32e9a1fefc24092337ae061f3dbc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 2800000, guid: c6093d6055cd6a44ebf0637f17fca0e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 2800000, guid: 4e2f32e9a1fefc24092337ae061f3dbc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaClip: 0
+    - _AlphaTestRef: 0.5
+    - _AutoQueue: 1
+    - _BaseBright: 0
+    - _BaseSaturation: 1
+    - _BlendMode: 0
+    - _BumpScale: 1
+    - _CullMode: -1
+    - _Cutoff: 0.5
+    - _DetailAlbedoMultiplier: 2
+    - _DetailMode: 0
+    - _DetailNormalMapScale: 1
+    - _DissolveFade: 0
+    - _DissolveIntensity: 6.4
+    - _DissolveSmooth: 0.056
+    - _DissolveStep: 0.01
+    - _DitherFade: 0
+    - _DstBlend: 0
+    - _Emission: 0
+    - _EmissionFlashing: 0
+    - _EmissionFlashingInterval: 0
+    - _EmissionFlashingMin: 0
+    - _EmissionIntensity: 0
+    - _EmissionScale: 1
+    - _EmissionScaleUI: 1
+    - _GPUInstancing: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.15
+    - _GlossyReflections: 1
+    - _InverseClippingMask: 0
+    - _Lightmapping: 0
+    - _MatCap: 0
+    - _MatCapBlendMode: 1
+    - _MatCapBlur: 0
+    - _MatCapIntensity: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _OutLine: 1
+    - _OutLineWidth: 0.005
+    - _Parallax: 0.02
+    - _RenderQueueMode: 0
+    - _RenderQueueValue: 2000
+    - _RimLight: 1
+    - _RimLightIntensity: 0.6
+    - _RimLightSmooth: 0.0001
+    - _RimLightStep: 0.33
+    - _RimLightWithLambert: 1
+    - _SSAOSmooth: 0.1
+    - _SSAOStep: 0.5
+    - _ShadowSmooth: 0.0001
+    - _ShadowStep: 0
+    - _Shininess: 0.41313845
+    - _SmoothnessTextureChannel: 0
+    - _Specular: 1
+    - _SpecularHighlights: 1
+    - _SpecularIntensity: 0.5
+    - _SpecularSmooth: 0.0001
+    - _SpecularStep: 0.9
+    - _SrcBlend: 1
+    - _StencilComp: 0
+    - _StencilMode: 0
+    - _StencilNo: 1
+    - _StencilOpFail: 0
+    - _StencilOpPass: 0
+    - _UVPrim: 0
+    - _UVSec: 0
+    - _ZWrite: 1
+    - _ZWriteMode: 1
+    m_Colors:
+    - _BaseColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DissolveColor: {r: 1, g: 0.33389878, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 0.99999994}
+    - _EmissionColorUI: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColorWithMapUI: {r: 1, g: 1, b: 1, a: 1}
+    - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutLineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SpecColor: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
