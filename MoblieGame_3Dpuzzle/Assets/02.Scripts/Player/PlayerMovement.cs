@@ -6,12 +6,14 @@ public class PlayerMovement : MonoBehaviour
     private NavMeshAgent agent;
     private LineRenderer lineRenderer;
     private Camera mainCamera;
+    private Animator animator; // Animator 컴포넌트 변수 추가
     private bool canMove = true; // 플레이어가 이동할 수 있는지 여부를 제어하는 플래그
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         lineRenderer = GetComponent<LineRenderer>();
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
         mainCamera = Camera.main;
 
         if (agent == null)
@@ -22,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
         if (lineRenderer == null)
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator가 플레이어에 추가되지 않았습니다.");
         }
 
         lineRenderer.positionCount = 0;
@@ -45,7 +52,8 @@ public class PlayerMovement : MonoBehaviour
             HandleTouchInput();
             UpdatePathLine();
         }
-        //UpdatePathLine();
+
+        UpdateMovementAnimation();
     }
 
     private void HandleTouchInput()
@@ -117,6 +125,22 @@ public class PlayerMovement : MonoBehaviour
         return remainingPath;
     }
 
+    private void UpdateMovementAnimation()
+    {
+        if (animator != null)
+        {
+            // 속도가 거의 0에 가까운지 체크하여 멈춤 상태를 확인
+            if (agent.velocity.sqrMagnitude > 0.1f)
+            {
+                animator.SetBool("isMove", true); // 이동 중일 때 isMove를 true로 설정
+            }
+            else
+            {
+                animator.SetBool("isMove", false); // 멈췄을 때 isMove를 false로 설정
+            }
+        }
+    }
+
     // 플레이어 이동을 허용하는 메서드
     public void EnableMovement()
     {
@@ -130,5 +154,6 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         agent.isStopped = true; // NavMeshAgent 동작 중지
         lineRenderer.positionCount = 0; // 경로 표시 제거
+        animator.SetBool("isMove", false); // 멈췄을 때 isMove를 false로 설정
     }
 }
