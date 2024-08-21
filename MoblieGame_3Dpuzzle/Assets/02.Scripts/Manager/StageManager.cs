@@ -59,7 +59,9 @@ public class StageManager : MonoBehaviour
             {
                 // 적의 위치를 터렛 앞에 배치 (Z 방향)
                 Vector3 spawnPosition = turret.transform.position + new Vector3(0, 5, 70);
-                EnemyAI enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+                // 적 오브젝트를 Y축을 기준으로 180도 회전시켜 생성
+                EnemyAI enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.Euler(0, 180, 0));
 
                 // 적을 리스트와 ObjectManager에 등록
                 currentEnemies.Add(enemyInstance.gameObject);

@@ -252,6 +252,14 @@
             "icon": null
           },
           {
+            "name": "LODGroup",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "LevelGameManager",
             "scenes": [
               "Assets/01.Scenes/SampleScene.unity"
@@ -448,6 +456,12 @@
             "icon": null
           },
           {
+            "name": "SkinnedMeshRenderer",
+            "scenes": [],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "Skybox",
             "scenes": [],
             "dependencyType": 0,
@@ -616,6 +630,18 @@
             "scenes": [],
             "dependencyType": 2,
             "icon": "package/com.unity.modules.subsystems"
+          },
+          {
+            "name": "Required by Terrain Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrain"
+          },
+          {
+            "name": "Required by TerrainPhysics Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrainphysics"
           },
           {
             "name": "Required by TextCoreFontEngine Module",
@@ -801,6 +827,12 @@
             "icon": null
           },
           {
+            "name": "CharacterController",
+            "scenes": [],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "Collider",
             "scenes": [],
             "dependencyType": 1,
@@ -833,6 +865,12 @@
             "scenes": [],
             "dependencyType": 0,
             "icon": null
+          },
+          {
+            "name": "Required by TerrainPhysics Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrainphysics"
           },
           {
             "name": "Required by VR Module",
@@ -994,6 +1032,18 @@
             "icon": "package/com.unity.modules.subsystems"
           },
           {
+            "name": "Required by Terrain Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrain"
+          },
+          {
+            "name": "Required by TerrainPhysics Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrainphysics"
+          },
+          {
             "name": "Required by TextCoreFontEngine Module",
             "scenes": [],
             "dependencyType": 2,
@@ -1055,6 +1105,54 @@
             "scenes": [],
             "dependencyType": 2,
             "icon": "package/com.unity.modules.xr"
+          }
+        ]
+      },
+      {
+        "name": "Terrain",
+        "dependencies": [
+          {
+            "name": "Terrain",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
+            "name": "TerrainData",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
+            "name": "TerrainLayer",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
+            "name": "Required by TerrainPhysics Module",
+            "scenes": [],
+            "dependencyType": 2,
+            "icon": "package/com.unity.modules.terrainphysics"
+          }
+        ]
+      },
+      {
+        "name": "TerrainPhysics",
+        "dependencies": [
+          {
+            "name": "TerrainCollider",
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
+            "dependencyType": 0,
+            "icon": null
           }
         ]
       },
