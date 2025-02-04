@@ -20797,6 +20797,7 @@ struct PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351  : public MonoBe
 	NavMeshAgent_t5D0CCC0B3B78242F286C9BD8EDD87C3CCBD0A66F* ___agent;
 	LineRenderer_tEFEF960672DB69CB14B6D181FAE6292F0CF8B63D* ___lineRenderer;
 	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___mainCamera;
+	Animator_t8A52E42AE54F76681838FE9E632683EF3952E883* ___animator;
 	bool ___canMove;
 };
 struct ProbeTouchupVolume_tBBB66556DBE3CBB0FE0A3F870598511AA61CE796  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
@@ -30702,9 +30703,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5505[1] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5506[3] = 
 {
 	static_cast<int32_t>(offsetof(RotationGizmo_t172B6A407898B3638DE3CB05E87D45D0CF18CA28, ___targetObjects)),static_cast<int32_t>(offsetof(RotationGizmo_t172B6A407898B3638DE3CB05E87D45D0CF18CA28, ___rotationSpeed)),static_cast<int32_t>(offsetof(RotationGizmo_t172B6A407898B3638DE3CB05E87D45D0CF18CA28, ___previousTouchPosition)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5507[4] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5507[5] = 
 {
-	static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___agent)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___lineRenderer)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___mainCamera)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___canMove)),};
+	static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___agent)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___lineRenderer)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___mainCamera)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___animator)),static_cast<int32_t>(offsetof(PlayerMovement_t4A0A0A8C937BC1D4FC570D1B5B50847338423351, ___canMove)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5508[4] = 
 {
 	static_cast<int32_t>(sizeof(RuntimeObject)),0,0,0,};

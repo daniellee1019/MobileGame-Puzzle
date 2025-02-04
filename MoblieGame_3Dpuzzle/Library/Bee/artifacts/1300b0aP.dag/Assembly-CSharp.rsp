@@ -301,6 +301,7 @@
 -r:"Library/PackageCache/com.unity.visualscripting@1.9.2/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/1300b0aP.dag/Cinemachine.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aP.dag/Gentleland.SteampunkUI.DemoAndExample.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Polyperfect.Universal.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aP.dag/Unity.AI.Navigation.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Burst.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Mathematics.ref.dll"

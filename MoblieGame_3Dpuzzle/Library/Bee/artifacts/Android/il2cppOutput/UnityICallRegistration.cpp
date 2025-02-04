@@ -238,6 +238,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_AI_NavMeshAgent_CopyPathTo();
 		Register_UnityEngine_AI_NavMeshAgent_CopyPathTo();
 
+		//System.Void UnityEngine.AI.NavMeshAgent::get_velocity_Injected(UnityEngine.Vector3&)
+		void Register_UnityEngine_AI_NavMeshAgent_get_velocity_Injected();
+		Register_UnityEngine_AI_NavMeshAgent_get_velocity_Injected();
+
 		//System.Void UnityEngine.AI.NavMeshAgent::set_acceleration(System.Single)
 		void Register_UnityEngine_AI_NavMeshAgent_set_acceleration();
 		Register_UnityEngine_AI_NavMeshAgent_set_acceleration();
@@ -1234,6 +1238,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Animator_ResetTriggerString();
 		Register_UnityEngine_Animator_ResetTriggerString();
 
+		//System.Void UnityEngine.Animator::SetBoolString(System.String,System.Boolean)
+		void Register_UnityEngine_Animator_SetBoolString();
+		Register_UnityEngine_Animator_SetBoolString();
+
 		//System.Void UnityEngine.Animator::SetTriggerString(System.String)
 		void Register_UnityEngine_Animator_SetTriggerString();
 		Register_UnityEngine_Animator_SetTriggerString();
@@ -1937,6 +1945,10 @@ void RegisterAllStrippedInternalCalls()
 		//System.Boolean UnityEngine.CharacterController::get_isGrounded()
 		void Register_UnityEngine_CharacterController_get_isGrounded();
 		Register_UnityEngine_CharacterController_get_isGrounded();
+
+		//System.Void UnityEngine.CharacterController::set_slopeLimit(System.Single)
+		void Register_UnityEngine_CharacterController_set_slopeLimit();
+		Register_UnityEngine_CharacterController_set_slopeLimit();
 
 		//UnityEngine.CollisionFlags UnityEngine.CharacterController::Move_Injected(UnityEngine.Vector3&)
 		void Register_UnityEngine_CharacterController_Move_Injected();
@@ -4073,6 +4085,10 @@ void RegisterAllStrippedInternalCalls()
 	//End Registrations for type : UnityEngine.ParticleSystemRenderer
 
 	//Start Registrations for type : UnityEngine.Physics
+
+		//System.Boolean UnityEngine.Physics::CheckSphere_Internal_Injected(UnityEngine.PhysicsScene&,UnityEngine.Vector3&,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)
+		void Register_UnityEngine_Physics_CheckSphere_Internal_Injected();
+		Register_UnityEngine_Physics_CheckSphere_Internal_Injected();
 
 		//System.Boolean UnityEngine.Physics::Query_ComputePenetration_Injected(UnityEngine.Collider,UnityEngine.Vector3&,UnityEngine.Quaternion&,UnityEngine.Collider,UnityEngine.Vector3&,UnityEngine.Quaternion&,UnityEngine.Vector3&,System.Single&)
 		void Register_UnityEngine_Physics_Query_ComputePenetration_Injected();

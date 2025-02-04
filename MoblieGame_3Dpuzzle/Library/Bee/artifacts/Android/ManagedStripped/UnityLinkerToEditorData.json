@@ -51,19 +51,25 @@
           },
           {
             "name": "AnimationClip",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "Animator",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "AnimatorController",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 1,
             "icon": null
           },
@@ -75,7 +81,9 @@
           },
           {
             "name": "Avatar",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
@@ -88,7 +96,7 @@
           {
             "name": "Motion",
             "scenes": [],
-            "dependencyType": 0,
+            "dependencyType": 1,
             "icon": null
           },
           {
@@ -457,7 +465,9 @@
           },
           {
             "name": "SkinnedMeshRenderer",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },

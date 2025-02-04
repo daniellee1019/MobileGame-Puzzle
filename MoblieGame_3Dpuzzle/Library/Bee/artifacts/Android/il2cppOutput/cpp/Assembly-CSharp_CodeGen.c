@@ -83,6 +83,7 @@ extern void PlayerMovement_Update_m5BB6CE35AF68EE00CFEB4BA5EBA17E10667551D3 (voi
 extern void PlayerMovement_HandleTouchInput_m2560BE84DCF33F98801D58B826F77E0793CC69B3 (void);
 extern void PlayerMovement_UpdatePathLine_mC3792168A082B10A271CCBD034E49A35269B7AC8 (void);
 extern void PlayerMovement_GetRemainingPath_mB7AA6574013D3A832281F990DC86F3B4967E7F8D (void);
+extern void PlayerMovement_UpdateMovementAnimation_mA136534E446F3EDD5CBBBB49080796B199483700 (void);
 extern void PlayerMovement_EnableMovement_m3966FA88A5DA893A7592373FD1918642482BA32E (void);
 extern void PlayerMovement_DisableMovement_m1A7BF34627E95CAF3939946C6763AB13D6263DAC (void);
 extern void PlayerMovement__ctor_mB37559C5B0638161878D20E00B7C672FC38BBBAA (void);
@@ -389,7 +390,7 @@ extern void MeshFilterNormalAverage__ctor_mF488CB05C4EF0B7F7D86BDB7ACF23E8871851
 extern void SkinnedMeshNormalAverage_Awake_mC6481E2CD39CB5400122A773682CEA804FA87F01 (void);
 extern void SkinnedMeshNormalAverage_MeshNormalAverage_m561153CB1546FBA24E084DF52394F686C4396A35 (void);
 extern void SkinnedMeshNormalAverage__ctor_mBC17145A2D565EBB9EBDFFD108DB541DD1468DAD (void);
-static Il2CppMethodPointer s_methodPointers[378] = 
+static Il2CppMethodPointer s_methodPointers[379] = 
 {
 	EnemyAI_Start_mF7B5F2CCA1F4E07B3443D6520DFC0114CCBF7D28,
 	EnemyAI_InitializeEnemy_m6D56FE0C911FF528989994824775559D1A29B4AC,
@@ -463,6 +464,7 @@ static Il2CppMethodPointer s_methodPointers[378] =
 	PlayerMovement_HandleTouchInput_m2560BE84DCF33F98801D58B826F77E0793CC69B3,
 	PlayerMovement_UpdatePathLine_mC3792168A082B10A271CCBD034E49A35269B7AC8,
 	PlayerMovement_GetRemainingPath_mB7AA6574013D3A832281F990DC86F3B4967E7F8D,
+	PlayerMovement_UpdateMovementAnimation_mA136534E446F3EDD5CBBBB49080796B199483700,
 	PlayerMovement_EnableMovement_m3966FA88A5DA893A7592373FD1918642482BA32E,
 	PlayerMovement_DisableMovement_m1A7BF34627E95CAF3939946C6763AB13D6263DAC,
 	PlayerMovement__ctor_mB37559C5B0638161878D20E00B7C672FC38BBBAA,
@@ -770,7 +772,7 @@ static Il2CppMethodPointer s_methodPointers[378] =
 	SkinnedMeshNormalAverage_MeshNormalAverage_m561153CB1546FBA24E084DF52394F686C4396A35,
 	SkinnedMeshNormalAverage__ctor_mBC17145A2D565EBB9EBDFFD108DB541DD1468DAD,
 };
-static const int32_t s_InvokerIndices[378] = 
+static const int32_t s_InvokerIndices[379] = 
 {
 	7155,
 	7155,
@@ -801,8 +803,8 @@ static const int32_t s_InvokerIndices[378] =
 	5650,
 	7155,
 	5650,
-	12757,
-	11953,
+	12760,
+	11956,
 	7155,
 	5650,
 	5650,
@@ -850,6 +852,7 @@ static const int32_t s_InvokerIndices[378] =
 	7155,
 	7155,
 	7155,
+	7155,
 	5650,
 	7155,
 	7155,
@@ -892,7 +895,7 @@ static const int32_t s_InvokerIndices[378] =
 	7022,
 	7155,
 	7155,
-	12820,
+	12823,
 	7155,
 	1425,
 	7155,
@@ -1012,7 +1015,7 @@ static const int32_t s_InvokerIndices[378] =
 	7022,
 	7022,
 	7155,
-	12804,
+	12807,
 	5616,
 	7155,
 	6919,
@@ -1155,7 +1158,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	378,
+	379,
 	s_methodPointers,
 	0,
 	NULL,

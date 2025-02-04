@@ -22,13 +22,13 @@ public class TurretController : MonoBehaviour, IInteractable
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
         }
-
+        /*
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.green;
         lineRenderer.endColor = Color.red;
-
+        */
         mainCamera = Camera.main;
     }
 
