@@ -1,0 +1,8 @@
+{
+  "basicDamage": 10,
+  "critMultiplier": 2.0,
+  "critChance": 0.1,
+  "armorPenetration": 0.1,
+  "upgradeMultiplier": 0.05,
+  "currentLevel": 1
+}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc057f43b3997842b9e4f0749d59151, type: 3}
   m_Name: StrongEnemy
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 10000
   armor: 10
   speed: 0.5
   damage: 0
