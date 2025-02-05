@@ -105,6 +105,8 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void Die()
     {
+        // 보스 클리어 조건을 만족했다면
+        StageManager.Instance.OnBossCleared();
         // 적 사망 시 추가 효과(사운드, 애니메이션 등)를 넣을 수 있음
         Destroy(gameObject);
     }

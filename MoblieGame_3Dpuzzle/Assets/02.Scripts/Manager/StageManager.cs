@@ -3,18 +3,44 @@ using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
 {
-    public Stage currentStage; // 현재 스테이지를 enum으로 관리
-    public EnemyAI[] stageEnemiesPrefabs; // 각 스테이지에 맞는 적 프리팹 배열 (스테이지별로 하나씩)
+    // enum Stage 제거 ? 이제 Day 데이터로 관리합니다.
+    // public Stage currentStage; // 제거
+    public static StageManager Instance;
+
+    public EnemyAI[] stageEnemiesPrefabs; // 각 Day에 맞는 적 프리팹 배열 (Day별로 하나씩)
 
     private TurretController turret;
-    private List<GameObject> currentEnemies = new List<GameObject>(); // 현재 스테이지의 적들을 관리하는 리스트
+    private List<GameObject> currentEnemies = new List<GameObject>(); // 현재 Day의 적들을 관리하는 리스트
+
+    // 저장된 게임 진행 데이터를 보관 (GameSaveData에는 currentDay, dayRecords, currencyData가 포함됨)
+    private GameSaveData saveData;
+
+    // 보스 보상 기준 데이터 (gamesave.json의 currencyData; 예: Day1 보상)
+    public CurrencyData bossRewardBase;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {
+        // 저장된 게임 데이터를 로드합니다.
+        saveData = SaveManager.Instance.LoadGame();
+
         FindTurret();
 
-        Debug.Log("Start: Initializing stage: " + currentStage); // 초기화 로그 추가
-        InitializeStage(currentStage);
+        Debug.Log("Start: Initializing Day: " + saveData.currentDay);
+        InitializeStage(saveData.currentDay);
     }
 
     private void Update()
@@ -27,23 +53,32 @@ public class StageManager : MonoBehaviour
 
     private void OnValidate()
     {
-        // 인스펙터에서 currentStage가 변경될 때마다 호출
-        //InitializeStage(currentStage);
+        // 인스펙터에서 값이 변경되었을 때 호출 (필요 시 사용)
     }
+
     private void FindTurret()
     {
         // ObjectManager를 통해 플레이어 참조
         turret = ObjectManager.Instance.turret;
     }
 
-    public void InitializeStage(Stage stage)
+    /// <summary>
+    /// 해당 Day에 맞는 적(보스 등)을 소환하고 등록합니다.
+    /// Day 번호를 배열 인덱스로 변환하여 적 프리팹을 선택합니다.
+    /// </summary>
+    public void InitializeStage(int day)
     {
-        Debug.Log("Initializing stage: " + stage); // 디버그 로그 추가
-
-        // 기존 스테이지의 적들 제거
+        Debug.Log("Initializing Day: " + day);
         ClearCurrentEnemies();
 
-        int stageIndex = (int)stage - 1; // Enum 값에서 인덱스를 얻기 위해 1을 뺌
+        // 플레이어 재화 출력 (현재 Day 시작 시)
+        PlayerSaveData playerData = PlayerSaveManager.Instance.LoadPlayerData();
+        Debug.Log("Player currency at start of Day " + day +
+                  ": Gold = " + playerData.playerCurrencyData.gold +
+                  ", Wood = " + playerData.playerCurrencyData.wood +
+                  ", Stone = " + playerData.playerCurrencyData.stone);
+
+        int stageIndex = day - 1; // Day 1 -> index 0
 
         if (turret == null)
         {
@@ -51,62 +86,120 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        // 현재 스테이지에 맞는 적 프리팹을 선택
         if (stageIndex >= 0 && stageIndex < stageEnemiesPrefabs.Length)
         {
             EnemyAI enemyPrefab = stageEnemiesPrefabs[stageIndex];
             if (enemyPrefab != null)
             {
-                // 적의 위치를 터렛 앞에 배치 (Z 방향)
+                // 터렛 앞쪽 (예: Y+5, Z+70) 위치에 적을 소환
                 Vector3 spawnPosition = turret.transform.position + new Vector3(0, 5, 70);
-
-                // 적 오브젝트를 Y축을 기준으로 180도 회전시켜 생성
+                // Y축 180도 회전하여 터렛을 향하도록 생성
                 EnemyAI enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.Euler(0, 180, 0));
-
-                // 적을 리스트와 ObjectManager에 등록
                 currentEnemies.Add(enemyInstance.gameObject);
                 ObjectManager.Instance.RegisterEnemy(enemyInstance);
-
-                Debug.Log("Spawned enemy for stage: " + stage); // 디버그 로그 추가
+                Debug.Log("Spawned enemy for Day: " + day);
             }
             else
             {
-                Debug.LogError("적 프리팹이 null입니다. 스테이지 인덱스: " + stageIndex);
+                Debug.LogError("적 프리팹이 null입니다. Day 인덱스: " + stageIndex);
             }
         }
         else
         {
-            Debug.LogError("스테이지 인덱스가 적 프리팹 배열의 범위를 벗어났습니다.");
+            Debug.LogError("Day 인덱스가 적 프리팹 배열의 범위를 벗어났습니다.");
         }
     }
 
-    public void SetCurrentStage(Stage stage)
+    /// <summary>
+    /// 현재 Day를 설정하고 해당 Day에 맞게 초기화합니다.
+    /// </summary>
+    /// <param name="day">새로운 Day 번호</param>
+    public void SetCurrentDay(int day)
     {
-        Debug.Log("Setting current stage to: " + stage); // 디버그 로그 추가
-        currentStage = stage;
-        InitializeStage(stage); // 해당 스테이지로 초기화
+        Debug.Log("Setting current day to: " + day);
+        saveData.currentDay = day;
+        InitializeStage(day);
     }
 
-    // 다음 스테이지로 진행하는 함수
+    /// <summary>
+    /// 다음 Day로 진행합니다.
+    /// OnBossCleared()에서 이미 currentDay가 증가되었으므로, NextStage()는 추가 증가는 하지 않습니다.
+    /// </summary>
     public void NextStage()
     {
-        Debug.Log("Proceeding to next stage from: " + currentStage); // 디버그 로그 추가
-        SetCurrentStage((Stage)((int)currentStage + 1));
+        Debug.Log("Proceeding to next Day: " + saveData.currentDay);
+        // 이미 currentDay가 증가된 상태이므로 그대로 초기화
+        SetCurrentDay(saveData.currentDay);
     }
 
+    /// <summary>
+    /// 현재 Day에서 생성된 모든 적들을 제거합니다.
+    /// </summary>
     private void ClearCurrentEnemies()
     {
-        Debug.Log("Clearing current enemies."); // 디버그 로그 추가
-
-        // 현재 스테이지에서 생성된 모든 적을 제거
+        Debug.Log("Clearing current enemies.");
         foreach (GameObject enemy in currentEnemies)
         {
             if (enemy != null)
             {
                 Destroy(enemy);
-                Debug.Log("Destroyed enemy: " + enemy.name); // 디버그 로그 추가
+                Debug.Log("Destroyed enemy: " + enemy.name);
             }
         }
-        currentEnemies.Clear(); // 리스트 초기화
+        currentEnemies.Clear();
+    }
+
+    /// <summary>
+    /// 보스(현재 Day의 적)를 클리어했을 때 호출하는 함수입니다.
+    /// 보스 클리어 여부를 기록하고, 재화 보상 및 다음 Day 진행을 처리합니다.
+    /// </summary>
+    public void OnBossCleared()
+    {
+        Debug.Log("Boss cleared for Day: " + saveData.currentDay);
+
+        // 현재 Day의 보스 클리어 기록 업데이트
+        DayRecordData currentDayRecord = saveData.dayRecords.Find(record => record.day == saveData.currentDay);
+        if (currentDayRecord != null)
+        {
+            currentDayRecord.bossCleared = true;
+        }
+
+        // 보상 증가율: 매 Day마다 10% 증가 → multiplier = 1.1^(currentDay - 1)
+        float rewardMultiplier = Mathf.Pow(1.1f, saveData.currentDay - 1);
+        int goldReward = Mathf.RoundToInt(saveData.currencyData.gold * rewardMultiplier);
+        int woodReward = Mathf.RoundToInt(saveData.currencyData.wood * rewardMultiplier);
+        int stoneReward = Mathf.RoundToInt(saveData.currencyData.stone * rewardMultiplier);
+
+        Debug.Log("Rewards for Day " + saveData.currentDay + ": Gold = " + goldReward +
+                  ", Wood = " + woodReward + ", Stone = " + stoneReward);
+
+        // 플레이어 재화에 보상 추가
+        PlayerSaveData playerData = PlayerSaveManager.Instance.LoadPlayerData();
+        playerData.playerCurrencyData.AddCurrency(goldReward, woodReward, stoneReward);
+        PlayerSaveManager.Instance.SavePlayerData(playerData);
+
+        Debug.Log(playerData);
+
+        // 다음 Day 진행: currentDay 증가 및 새 DayRecord 생성
+        saveData.currentDay++;
+        DayRecordData newRecord = new DayRecordData();
+        newRecord.day = saveData.currentDay;
+        newRecord.bossCleared = false;
+        saveData.dayRecords.Add(newRecord);
+
+        SaveManager.Instance.SaveGame(saveData);
+
+        // 다음 Day(스테이지) 초기화
+        NextStage();
+    }
+    public void OnResetButtonClicked()
+    {
+        // 방법 1: 파일 삭제
+        //SaveManager.Instance.ResetGameData_DeleteFiles();
+        //PlayerSaveManager.Instance.ResetPlayerData_DeleteFiles();
+
+        // 또는 방법 2: 기본 데이터로 덮어쓰기
+        SaveManager.Instance.ResetGameData();
+        PlayerSaveManager.Instance.ResetPlayerData();
     }
 }

@@ -1,0 +1,14 @@
+{
+  "currentDay": 1,
+  "dayRecords": [
+    {
+      "day": 1,
+      "bossCleared": false
+    }
+  ],
+  "currencyData": {
+    "gold": 100,
+    "wood": 50,
+    "stone": 20
+  }
+}
