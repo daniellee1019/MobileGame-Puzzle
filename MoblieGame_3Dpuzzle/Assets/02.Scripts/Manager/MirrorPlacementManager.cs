@@ -54,15 +54,21 @@ public class MirrorPlacementManager : MonoBehaviour
             FindPlayer();
         }
 
-        if (isDragging)
+        // Nomal/Restore Mode가 활성화되었을 경우 조작을 막음
+        if (PlayerModeController.Instance.IsMode(PlayerMode.Normal) || PlayerModeController.Instance.IsMode(PlayerMode.Restore))
+        {
+            return; // 아무 동작도 하지 않음
+        }
+
+        if (isDragging && PlayerModeController.Instance.IsMode(PlayerMode.Turret))
         {
             HandleMirrorDragging();
         }
-        else if (isPlacing)
+        else if (isPlacing && PlayerModeController.Instance.IsMode(PlayerMode.Turret))
         {
             HandleMirrorPlacement();
         }
-        else if (isRotating)
+        else if (isRotating && PlayerModeController.Instance.IsMode(PlayerMode.Turret))
         {
             HandleMirrorRotation();
         }
@@ -75,6 +81,12 @@ public class MirrorPlacementManager : MonoBehaviour
 
     private void StartDraggingMirror(int mirrorIndex)
     {
+        // Nomal/Restore Mode가 활성화되었을 경우 조작을 막음
+        if (PlayerModeController.Instance.IsMode(PlayerMode.Normal) || PlayerModeController.Instance.IsMode(PlayerMode.Restore))
+        {
+            return; // 아무 동작도 하지 않음
+        }
+
         if (currentMirrorPreview != null)
         {
             Destroy(currentMirrorPreview);
@@ -126,6 +138,12 @@ public class MirrorPlacementManager : MonoBehaviour
 
     private void HandleMirrorDragging()
     {
+        // Nomal/Restore Mode가 활성화되었을 경우 조작을 막음
+        if (PlayerModeController.Instance.IsMode(PlayerMode.Normal) || PlayerModeController.Instance.IsMode(PlayerMode.Restore))
+        {
+            return; // 아무 동작도 하지 않음
+        }
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -157,6 +175,12 @@ public class MirrorPlacementManager : MonoBehaviour
 
     private void HandleMirrorPlacement()
     {
+        // Nomal/Restore Mode가 활성화되었을 경우 조작을 막음
+        if (PlayerModeController.Instance.IsMode(PlayerMode.Normal) || PlayerModeController.Instance.IsMode(PlayerMode.Restore))
+        {
+            return; // 아무 동작도 하지 않음
+        }
+
         isPlacing = false;
         isRotating = true;
 
@@ -166,6 +190,12 @@ public class MirrorPlacementManager : MonoBehaviour
 
     private void HandleMirrorRotation()
     {
+        // Nomal/Restore Mode가 활성화되었을 경우 조작을 막음
+        if (PlayerModeController.Instance.IsMode(PlayerMode.Normal) || PlayerModeController.Instance.IsMode(PlayerMode.Restore))
+        {
+            return; // 아무 동작도 하지 않음
+        }
+
         if (currentMirrorPreview == null)
             return;
 
@@ -191,9 +221,6 @@ public class MirrorPlacementManager : MonoBehaviour
         DisableGizmo(currentMirrorPreview); // 기즈모 비활성화
         currentMirrorPreview = null;
         isRotating = false;
-
-        // 회전이 끝난 후에 플레이어의 움직임을 활성화합니다.
-        playerMovement.EnableMovement();
     }
 
     private void EnableGizmo(GameObject mirror)

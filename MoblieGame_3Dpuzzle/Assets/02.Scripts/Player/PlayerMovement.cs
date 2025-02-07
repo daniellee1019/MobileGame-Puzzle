@@ -1,159 +1,115 @@
 using UnityEngine;
-using UnityEngine.AI;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private LineRenderer lineRenderer;
-    private Camera mainCamera;
-    private Animator animator; // Animator 컴포넌트 변수 추가
-    private bool canMove = true; // 플레이어가 이동할 수 있는지 여부를 제어하는 플래그
+    [SerializeField] private JoystickHandler joystick;
+    [SerializeField] private float moveSpeed = 3f;
 
-    void Start()
+    private Rigidbody _rigidbody;
+    private Animator _animator; // 애니메이터 추가
+
+    private bool canMove = true; // 움직임 제어
+
+    public float MoveSpeed // 런타임 속도 조정 가능
     {
-        agent = GetComponent<NavMeshAgent>();
-        lineRenderer = GetComponent<LineRenderer>();
-        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
-        mainCamera = Camera.main;
-
-        if (agent == null)
-        {
-            Debug.LogError("NavMeshAgent가 플레이어에 추가되지 않았습니다.");
-        }
-
-        if (lineRenderer == null)
-        {
-            lineRenderer = gameObject.AddComponent<LineRenderer>();
-        }
-
-        if (animator == null)
-        {
-            Debug.LogError("Animator가 플레이어에 추가되지 않았습니다.");
-        }
-
-        lineRenderer.positionCount = 0;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.green;
-        lineRenderer.endColor = Color.red;
-
-        // NavMeshAgent 설정 조정
-        agent.acceleration = 20f; // 가속도를 높여 장애물을 피할 때 속도를 유지
-        agent.angularSpeed = 360f; // 회전 속도를 높여 빠르게 방향 전환
-        agent.autoBraking = false; // 목적지 근처에서도 속도 유지
-        agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance; // 장애물 회피 설정
+        get => moveSpeed;
+        set => moveSpeed = Mathf.Max(0, value); // 음수 방지
     }
 
-    void Update()
+    private void Awake()
     {
-        if (canMove)
-        {
-            HandleTouchInput();
-            UpdatePathLine();
-        }
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.freezeRotation = true; // 회전을 물리적으로 고정
 
-        UpdateMovementAnimation();
+        _animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
+        if (_animator == null)
+        {
+            Debug.LogWarning("Animator 컴포넌트가 없습니다. 애니메이션 기능이 비활성화됩니다.");
+        }
     }
 
-    private void HandleTouchInput()
+    private void Start()
     {
-        if (Input.touchCount > 0)
+        if (joystick == null) // 조이스틱이 할당되지 않았다면
         {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
+            joystick = ObjectManager.Instance.GetJoystick();
+            if (joystick == null)
             {
-                Ray ray = mainCamera.ScreenPointToRay(touch.position);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
-                {
-                    agent.SetDestination(hit.point);
-                    UpdatePathLine();
-                }
+                Debug.LogError("Joystick is not registered in ObjectManager!");
             }
         }
     }
 
-    private void UpdatePathLine()
+
+    private void FixedUpdate()
     {
-        if (agent.pathPending)
+        if (joystick == null)
+        {
+            Debug.LogWarning("조이스틱을 할당해주세요!");
             return;
-
-        NavMeshPath path = agent.path;
-
-        if (path.status == NavMeshPathStatus.PathComplete)
-        {
-            lineRenderer.positionCount = path.corners.Length;
-            lineRenderer.SetPositions(path.corners);
         }
 
-        // 이미 이동한 경로를 제거하고 남은 경로만 표시
-        Vector3[] remainingPath = GetRemainingPath();
-        lineRenderer.positionCount = remainingPath.Length;
-        lineRenderer.SetPositions(remainingPath);
+        Move(joystick.InputDirection);
     }
 
-    private Vector3[] GetRemainingPath()
+    private void Move(Vector2 direction)
     {
-        if (agent.path.corners.Length == 0)
-            return new Vector3[0];
-
-        Vector3 playerPosition = transform.position;
-        Vector3[] fullPath = agent.path.corners;
-
-        int startIndex = 0;
-        float closestDistance = float.MaxValue;
-
-        for (int i = 0; i < fullPath.Length; i++)
+        if (direction == Vector2.zero)
         {
-            float distance = Vector3.Distance(playerPosition, fullPath[i]);
-            if (distance < closestDistance)
+            _rigidbody.velocity = Vector3.zero;
+
+            // 애니메이션 상태 업데이트
+            if (_animator != null)
             {
-                closestDistance = distance;
-                startIndex = i;
+                _animator.SetBool("isMove", false); // 이동 중 아님
+                _animator.SetFloat("Blend", 0f); // Blend 값을 0으로 설정 (Idle 상태)
             }
+
+            return;
         }
 
-        Vector3[] remainingPath = new Vector3[fullPath.Length - startIndex];
-        for (int i = startIndex; i < fullPath.Length; i++)
+        Vector3 movement = new Vector3(direction.x, 0, direction.y) * moveSpeed;
+        _rigidbody.velocity = new Vector3(movement.x, _rigidbody.velocity.y, movement.z);
+
+        RotateTowardsDirection(movement);
+
+        // 애니메이션 상태 업데이트
+        if (_animator != null)
         {
-            remainingPath[i - startIndex] = fullPath[i];
+            _animator.SetBool("isMove", true); // 이동 중
+            _animator.SetFloat("Blend", 1f); // Blend 값을 1로 설정 (Move 상태)
         }
-
-        return remainingPath;
     }
 
-    private void UpdateMovementAnimation()
+    private void RotateTowardsDirection(Vector3 movement)
     {
-        if (animator != null)
+        if (movement != Vector3.zero)
         {
-            // 속도가 거의 0에 가까운지 체크하여 멈춤 상태를 확인
-            if (agent.velocity.sqrMagnitude > 0.1f)
-            {
-                animator.SetBool("isMove", true); // 이동 중일 때 isMove를 true로 설정
-            }
-            else
-            {
-                animator.SetBool("isMove", false); // 멈췄을 때 isMove를 false로 설정
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(movement);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
     }
 
     // 플레이어 이동을 허용하는 메서드
     public void EnableMovement()
     {
-        canMove = true;
-        agent.isStopped = false; // NavMeshAgent 동작 재개
+        canMove = true; // 이동 가능하도록 설정
+        joystick.GetComponent<JoystickHandler>().enabled = true;
     }
 
     // 플레이어 이동을 차단하는 메서드
     public void DisableMovement()
     {
-        canMove = false;
-        agent.isStopped = true; // NavMeshAgent 동작 중지
-        lineRenderer.positionCount = 0; // 경로 표시 제거
-        animator.SetBool("isMove", false); // 멈췄을 때 isMove를 false로 설정
+        canMove = false; // 이동 차단
+        //_rigidbody.velocity = Vector3.zero; // 즉시 정지
+
+        joystick.GetComponent<JoystickHandler>().enabled = false;
+
+        if (_animator != null)
+        {
+            _animator.SetBool("isMove", false); // 애니메이션 정지
+            _animator.SetFloat("Blend", 0f); // Idle 상태로 전환
+        }
     }
 }

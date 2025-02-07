@@ -10,7 +10,9 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     public float interactionRadius = 2f; // 상호작용 가능 반경
     public Button rideButton; // UI 버튼
+
     private IInteractable currentInteractable;
+    private PlayerMovement player;
 
     void Start()
     {
@@ -18,6 +20,15 @@ public class PlayerInteractionManager : MonoBehaviour
         {
             rideButton.gameObject.SetActive(false); // 처음에 버튼 비활성화
             rideButton.onClick.AddListener(OnRideButtonClick);
+        }
+
+        if (player == null) // 조이스틱이 할당되지 않았다면
+        {
+            player = ObjectManager.Instance.GetPlayer();
+            if (player == null)
+            {
+                Debug.LogError("Joystick is not registered in ObjectManager!");
+            }
         }
     }
 
@@ -30,7 +41,7 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         currentInteractable = null;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius);
+        Collider[] colliders = Physics.OverlapSphere(player.transform.position, interactionRadius);
 
         foreach (Collider collider in colliders)
         {
@@ -51,7 +62,7 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         if (currentInteractable != null)
         {
-            currentInteractable.Interact(gameObject);
+            currentInteractable.Interact(player.gameObject);
         }
     }
 }

@@ -130,10 +130,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8073086772555192299}
-  - component: {fileID: 2423003376236760560}
   - component: {fileID: 5723404602075823078}
   - component: {fileID: 3537299535035499839}
-  - component: {fileID: 1027058858419796410}
+  - component: {fileID: 2648209055016134920}
   - component: {fileID: 4481030318737574541}
   - component: {fileID: 7905717457825127930}
   m_Layer: 0
@@ -160,28 +159,6 @@ Transform:
   - {fileID: 9099099296081717086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &2423003376236760560
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4132312772176831909}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 20
-  avoidancePriority: 50
-  m_AngularSpeed: 360
-  m_StoppingDistance: 0.3
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 4.32
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!54 &5723404602075823078
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -221,7 +198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b215c63fd28d147a9e534011bb1cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1027058858419796410
+  joystick: {fileID: 0}
+  moveSpeed: 6
+--- !u!114 &2648209055016134920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,11 +209,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4132312772176831909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e223e2cf93546e24e9fa250f86326613, type: 3}
+  m_Script: {fileID: 11500000, guid: 131ab1c7620ce3d428ab53b7f4dc05d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 2
-  rideButton: {fileID: 3369794037501482455}
 --- !u!95 &4481030318737574541
 Animator:
   serializedVersion: 5
@@ -431,7 +408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5801853160294467857
 RectTransform:
   m_ObjectHideFlags: 0

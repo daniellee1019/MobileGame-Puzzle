@@ -4,22 +4,34 @@ using UnityEngine.AI;
 
 public class TurretController : MonoBehaviour, IInteractable
 {
-    public Transform lightOrigin;
-    public float lightRange = 100f; // 빛의 최대 범위를 늘립니다.
     public LineRenderer lineRenderer;
     public Transform turretPosition; // 플레이어가 포탑에 탈 때 위치할 자리
+    public Transform lightOrigin;
+
+    public float lightRange = 100f; // 빛의 최대 범위를 늘립니다.
     public float dismountCooldown = 3f;
 
     // JSON을 통해 로드할 데미지 데이터
     public TurretDamageData turretDamageData;
 
-    private bool isMounted = false;
-    private bool canMount = true;
+    private JoystickHandler joystick;
     private GameObject player;
     private Camera mainCamera;
 
+    private bool isMounted = false;
+    private bool canMount = true;
+
+
     void Start()
     {
+        if (joystick == null) // 조이스틱이 할당되지 않았다면
+        {
+            joystick = ObjectManager.Instance.GetJoystick();
+            if (joystick == null)
+            {
+                Debug.LogError("Joystick is not registered in ObjectManager!");
+            }
+        }
 
         if (lineRenderer == null)
         {
@@ -153,10 +165,6 @@ public class TurretController : MonoBehaviour, IInteractable
         }
     }
 
-
-
-
-
     public void Interact(GameObject player)
     {
         if (!canMount) return;
@@ -175,21 +183,15 @@ public class TurretController : MonoBehaviour, IInteractable
 
     private void MountTurret()
     {
+        PlayerModeController.Instance.SetMode(PlayerMode.Turret);
+
         player.transform.SetParent(transform);
         player.transform.position = turretPosition.position;
         player.transform.rotation = turretPosition.rotation;
 
-        NavMeshAgent playerAgent = player.GetComponent<NavMeshAgent>();
-        if (playerAgent != null)
+        if (joystick != null)
         {
-            playerAgent.enabled = false;
-        }
-
-        Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb != null)
-        {
-            playerRb.isKinematic = true;
-            playerRb.useGravity = false;
+            joystick.GetComponent<JoystickHandler>().enabled = false;
         }
 
         isMounted = true;
@@ -197,21 +199,15 @@ public class TurretController : MonoBehaviour, IInteractable
 
     private void DismountTurret()
     {
+        PlayerModeController.Instance.SetMode(PlayerMode.Normal);
+
         player.transform.SetParent(null);
 
-        NavMeshAgent playerAgent = player.GetComponent<NavMeshAgent>();
-        if (playerAgent != null)
+        if (joystick != null)
         {
-            playerAgent.enabled = true;
+            joystick.GetComponent<JoystickHandler>().enabled = true;
         }
-
-        Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb != null)
-        {
-            playerRb.isKinematic = false;
-            playerRb.useGravity = true;
-        }
-
+  
         isMounted = false;
         StartCoroutine(DismountCooldown());
     }

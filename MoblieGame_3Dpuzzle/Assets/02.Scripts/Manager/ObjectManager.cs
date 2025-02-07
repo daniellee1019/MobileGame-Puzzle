@@ -5,8 +5,10 @@ public class ObjectManager : MonoBehaviour
     public static ObjectManager Instance { get; private set; }
 
     public PlayerMovement player;  // 플레이어 참조
-    public TurretController turret;  // 터렛 참조
     public EnemyAI[] enemies;  // 적 참조 배열
+
+    public TurretController turret;  // 터렛 참조
+    public JoystickHandler joystick;
 
     private void Awake()
     {
@@ -32,6 +34,11 @@ public class ObjectManager : MonoBehaviour
         this.turret = turret;
     }
 
+    public void RegisterJoystick(JoystickHandler joystick)
+    {
+        this.joystick = joystick;
+    }
+
     public void RegisterEnemy(EnemyAI enemy)
     {
         // 적을 배열에 추가
@@ -44,4 +51,15 @@ public class ObjectManager : MonoBehaviour
             }
         }
     }
+
+    public JoystickHandler GetJoystick()
+    {
+        return joystick;
+    }
+
+    public PlayerMovement GetPlayer()
+    {
+        return player;
+    }
+
 }
