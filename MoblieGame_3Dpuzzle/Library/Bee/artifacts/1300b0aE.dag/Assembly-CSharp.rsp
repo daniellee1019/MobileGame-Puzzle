@@ -385,6 +385,7 @@
 "Assets/02.Scripts/Manager/MirrorManager.cs"
 "Assets/02.Scripts/Manager/MirrorPlacementManager.cs"
 "Assets/02.Scripts/Manager/ObjectManager.cs"
+"Assets/02.Scripts/Manager/ObsSpawnerManager.cs"
 "Assets/02.Scripts/Manager/PlayerInteractionManager.cs"
 "Assets/02.Scripts/Manager/PlayerSaveManager.cs"
 "Assets/02.Scripts/Manager/PopupPoolManager.cs"

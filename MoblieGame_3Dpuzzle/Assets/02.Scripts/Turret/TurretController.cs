@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class TurretController : MonoBehaviour, IInteractable
 {
@@ -14,13 +16,16 @@ public class TurretController : MonoBehaviour, IInteractable
     // JSON을 통해 로드할 데미지 데이터
     public TurretDamageData turretDamageData;
 
+    private Button lockButton; // 락 버튼 추가
+    private Quaternion lockedRotation; // 락이 걸릴 때의 회전값을 저장
+
     private JoystickHandler joystick;
-    private GameObject player;
     private Camera mainCamera;
+    private GameObject player;
 
     private bool isMounted = false;
     private bool canMount = true;
-
+    private bool isLaserLocked = false; // 레이저 락 기능 추가
 
     void Start()
     {
@@ -33,9 +38,19 @@ public class TurretController : MonoBehaviour, IInteractable
             }
         }
 
-        if (lineRenderer == null)
+        // Lock 버튼 자동 할당
+        if (lockButton == null)
         {
-            lineRenderer = gameObject.AddComponent<LineRenderer>();
+            lockButton = GameObject.Find("Lock")?.GetComponent<Button>();
+
+            if (lockButton != null)
+            {
+                lockButton.onClick.AddListener(ToggleLaserLock);
+            }
+            else
+            {
+                Debug.LogError("Lock Button not found in the scene!");
+            }
         }
 
         mainCamera = Camera.main;
@@ -221,6 +236,14 @@ public class TurretController : MonoBehaviour, IInteractable
 
     private void ControlLightDirection()
     {
+        if (isLaserLocked)
+        {
+            lightOrigin.rotation = lockedRotation; // 락이 걸린 방향으로 강제 고정
+            return; // 더 이상 방향을 업데이트하지 않음
+        }
+
+        if (IsTouchOverSpecificUI("Lock")) return; // Lock 버튼 터치 시 터렛 조작을 무시
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -241,4 +264,44 @@ public class TurretController : MonoBehaviour, IInteractable
             }
         }
     }
+
+    private void ToggleLaserLock()
+    {
+        isLaserLocked = !isLaserLocked; // 락 상태 토글
+
+        if (isLaserLocked)
+        {
+            lockedRotation = lightOrigin.rotation; // 현재 회전값을 저장
+            Debug.Log("레이저 락 활성화!"); // 락 걸리면 조이스틱으로 방향 못 움직임
+        }
+        else
+        {
+            Debug.Log("레이저 락 해제!"); // 락 해제 시 방향 조정 가능
+        }
+    }
+
+    private bool IsTouchOverSpecificUI(string uiElementName)
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            PointerEventData eventData = new PointerEventData(EventSystem.current)
+            {
+                position = touch.position
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            foreach (var result in results)
+            {
+                if (result.gameObject.name == uiElementName) // 특정 UI 버튼 감지
+                {
+                    return true; // UI 버튼 위에서 터치가 발생했으므로 true 반환
+                }
+            }
+        }
+        return false;
+    }
+
 }

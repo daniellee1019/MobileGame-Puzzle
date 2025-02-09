@@ -149,11 +149,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7135d3dec6709cf4899904d45a05cc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOrigin: {fileID: 6519703223522998681}
-  lightRange: 15
   lineRenderer: {fileID: 6437387814393704599}
   turretPosition: {fileID: 7807921916552667646}
+  lightOrigin: {fileID: 6519703223522998681}
+  lightRange: 15
   dismountCooldown: 3
+  lockButton: {fileID: 2464696282606383358, guid: 79c09ddf9d7b9d44d9bf0a24aa7d44d8,
+    type: 3}
+  turretDamageData:
+    basicDamage: 0
+    critMultiplier: 0
+    critChance: 0
+    armorPenetration: 0
+    currentLevel: 0
+    upgradeMultiplier: 0
 --- !u!120 &6437387814393704599
 LineRenderer:
   serializedVersion: 2
