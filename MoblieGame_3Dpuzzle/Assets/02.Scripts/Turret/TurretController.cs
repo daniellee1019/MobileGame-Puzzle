@@ -107,6 +107,15 @@ public class TurretController : MonoBehaviour, IInteractable
             // Raycast로 물체와 충돌하는지 확인
             if (Physics.Raycast(ray, out hit, lightRange))
             {
+                // 장애물 충돌 감지 (레이저가 장애물을 통과하지 못하도록 설정)
+                if (hit.collider.CompareTag("Obstacle"))
+                {
+                    Debug.Log("레이저가 장애물과 충돌: " + hit.collider.name);
+                    lineRenderer.positionCount++;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+                    break; // 장애물을 만나면 레이저 중단
+                }
+
                 // 라인 렌더러에 현재 충돌 지점을 추가
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
