@@ -41,7 +41,7 @@ public class TurretController : MonoBehaviour, IInteractable
         // Lock 버튼 자동 할당
         if (lockButton == null)
         {
-            lockButton = GameObject.Find("Lock")?.GetComponent<Button>();
+            lockButton = GameObject.Find("lockButton")?.GetComponent<Button>();
 
             if (lockButton != null)
             {
@@ -251,7 +251,7 @@ public class TurretController : MonoBehaviour, IInteractable
             return; // 더 이상 방향을 업데이트하지 않음
         }
 
-        if (IsTouchOverSpecificUI("Lock")) return; // Lock 버튼 터치 시 터렛 조작을 무시
+        if (IsTouchOverSpecificUI("lockButton")) return; // Lock 버튼 터치 시 터렛 조작을 무시
 
         if (Input.touchCount > 0)
         {

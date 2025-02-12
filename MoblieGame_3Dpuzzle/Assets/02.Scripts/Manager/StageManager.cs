@@ -1,5 +1,8 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using DG.Tweening;
 
 public class StageManager : MonoBehaviour
 {
@@ -7,6 +10,7 @@ public class StageManager : MonoBehaviour
     // public Stage currentStage; // 제거
     public static StageManager Instance;
 
+    [Header("Boss Settings")]
     public EnemyAI[] stageEnemiesPrefabs; // 각 Day에 맞는 적 프리팹 배열 (Day별로 하나씩)
 
     private TurretController turret;
@@ -15,8 +19,13 @@ public class StageManager : MonoBehaviour
     // 저장된 게임 진행 데이터를 보관 (GameSaveData에는 currentDay, dayRecords, currencyData가 포함됨)
     private GameSaveData saveData;
 
+    [Header("RewardData")]
     // 보스 보상 기준 데이터 (gamesave.json의 currencyData; 예: Day1 보상)
     public CurrencyData bossRewardBase;
+
+    [Header("Day Transition UI")]
+    public CanvasGroup dayTransitionPanel; // UI 패널
+    public TextMeshProUGUI dayText; // "Day 1" → "D-1" 표시
 
     private void Awake()
     {
@@ -40,7 +49,9 @@ public class StageManager : MonoBehaviour
         FindTurret();
 
         Debug.Log("Start: Initializing Day: " + saveData.currentDay);
-        InitializeStage(saveData.currentDay);
+
+        // Stage 시작 전 UI 연출 실행
+        StartCoroutine(StartDayTransition(saveData.currentDay));
     }
 
     private void Update()
@@ -54,6 +65,38 @@ public class StageManager : MonoBehaviour
     private void OnValidate()
     {
         // 인스펙터에서 값이 변경되었을 때 호출 (필요 시 사용)
+    }
+
+    /// <summary>
+    /// 새로운 Day 시작 전 연출 (Day Transition)
+    /// </summary>
+    private IEnumerator StartDayTransition(int day)
+    {
+        dayTransitionPanel.alpha = 1;
+        dayTransitionPanel.gameObject.SetActive(true);
+        dayText.text = "Day " + day;
+
+        // 1. 중앙에서 점점 커지게 연출 (DOScale)
+        dayText.transform.localScale = Vector3.one * 0.5f;
+        dayText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(1f);
+
+        // 2. "D-1"로 텍스트 변경
+        dayText.text = "D-" + day;
+
+        yield return new WaitForSeconds(1f);
+
+        // 3. 화면 위로 이동 + 페이드아웃 (DOFade & DOMoveY)
+        dayText.transform.DOMoveY(Screen.height + 100, 1f);
+        dayText.DOFade(0, 1f);
+
+        yield return new WaitForSeconds(1f);
+
+        dayText.gameObject.SetActive(false);
+
+        // 스테이지 초기화 시작
+        InitializeStage(day);
     }
 
     private void FindTurret()
