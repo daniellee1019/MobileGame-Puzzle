@@ -337,6 +337,7 @@
 -r:"Library/Bee/artifacts/1300b0aE.dag/Gentleland.SteampunkUI.DemoAndExample.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Polyperfect.Universal.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/PPv2URPConverters.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/Unity.2D.Sprite.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Unity.AI.Navigation.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1300b0aE.dag/Unity.AI.Navigation.ref.dll"

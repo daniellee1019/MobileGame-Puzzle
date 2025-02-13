@@ -26,6 +26,15 @@ public class StageManager : MonoBehaviour
     [Header("Day Transition UI")]
     public CanvasGroup dayTransitionPanel; // UI 패널
     public TextMeshProUGUI dayText; // "Day 1" → "D-1" 표시
+    
+    [Header("Currency Text")]
+    // 재화를 표시할 TextMeshPro UI 컴포넌트 (인스펙터에서 할당)
+    public TMP_Text currencyText;
+    // 스프라이트 애셋에 지정한 이름 (Inspector에서 변경 가능)
+    public string goldSpriteName = "GoldIcon";
+    public string woodSpriteName = "WoodIcon";
+    public string stoneSpriteName = "StoneIcon";
+
 
     private void Awake()
     {
@@ -47,6 +56,7 @@ public class StageManager : MonoBehaviour
         saveData = SaveManager.Instance.LoadGame();
 
         FindTurret();
+        UpdateDisplay();
 
         Debug.Log("Start: Initializing Day: " + saveData.currentDay);
 
@@ -221,6 +231,8 @@ public class StageManager : MonoBehaviour
         playerData.playerCurrencyData.AddCurrency(goldReward, woodReward, stoneReward);
         PlayerSaveManager.Instance.SavePlayerData(playerData);
 
+        UpdateDisplay();
+
         Debug.Log(playerData);
 
         // 다음 Day 진행: currentDay 증가 및 새 DayRecord 생성
@@ -244,5 +256,20 @@ public class StageManager : MonoBehaviour
         // 또는 방법 2: 기본 데이터로 덮어쓰기
         SaveManager.Instance.ResetGameData();
         PlayerSaveManager.Instance.ResetPlayerData();
+    }
+
+    /// <summary>
+    /// PlayerSaveData에서 재화 정보를 불러와 텍스트에 업데이트합니다.
+    /// </summary>
+    public void UpdateDisplay()
+    {
+        // PlayerSaveManager를 통해 플레이어 데이터를 로드합니다.
+        PlayerSaveData playerData = PlayerSaveManager.Instance.LoadPlayerData();
+        int gold = playerData.playerCurrencyData.gold;
+        int wood = playerData.playerCurrencyData.wood;
+        int stone = playerData.playerCurrencyData.stone;
+
+        // 스프라이트 태그를 사용하여 아이콘과 숫자를 표시합니다.
+        currencyText.text = $"<sprite name=\"{goldSpriteName}\"> {gold}\n<sprite name=\"{woodSpriteName}\"> {wood}\n<sprite name=\"{stoneSpriteName}\"> {stone}";
     }
 }
