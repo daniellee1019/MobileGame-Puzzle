@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10000
   armor: 10
-  speed: 0.5
+  speed: 1.5
   damage: 0

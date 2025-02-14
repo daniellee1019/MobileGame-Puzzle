@@ -60,7 +60,7 @@ public class StageManager : MonoBehaviour
 
         Debug.Log("Start: Initializing Day: " + saveData.currentDay);
 
-        // Stage 시작 전 UI 연출 실행
+        // Day 전환 연출 후, 시간을 0으로 리셋한 후 보스 소환 대기
         StartCoroutine(StartDayTransition(saveData.currentDay));
     }
 
@@ -82,28 +82,44 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private IEnumerator StartDayTransition(int day)
     {
+        ClearCurrentEnemies();
+
+        #region Day UI 설정
+        // UI 요소의 상태를 초기화
         dayTransitionPanel.alpha = 1;
         dayTransitionPanel.gameObject.SetActive(true);
-        dayText.text = "Day " + day;
 
-        // 1. 중앙에서 점점 커지게 연출 (DOScale)
+        // dayText를 활성화하고 기본 상태로 리셋
+        dayText.gameObject.SetActive(true);
         dayText.transform.localScale = Vector3.one * 0.5f;
+        // 원하는 시작 위치로 재설정 (예: 중앙에 위치)
+        dayText.transform.localPosition = Vector3.zero;
+        // 알파를 1로 초기화 (즉시 적용)
+        dayText.DOFade(1, 0);
+
+        // 전환 연출 시작
+        dayText.text = "Day " + day;
         dayText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack);
-
         yield return new WaitForSeconds(1f);
 
-        // 2. "D-1"로 텍스트 변경
+        // 텍스트 변경
         dayText.text = "D-" + day;
-
         yield return new WaitForSeconds(1f);
 
-        // 3. 화면 위로 이동 + 페이드아웃 (DOFade & DOMoveY)
+        // 화면 위로 이동 및 페이드아웃
         dayText.transform.DOMoveY(Screen.height + 100, 1f);
         dayText.DOFade(0, 1f);
-
         yield return new WaitForSeconds(1f);
 
         dayText.gameObject.SetActive(false);
+        #endregion
+
+        // 새 Day 시작 시 TimeManager의 시간을 초기화
+        TimeManager.Instance.ResetDayTime();
+
+        // 여기서 보스 웨이브(적 소환)는 게임 내 시간이 12시(360초)에 도달한 후에 진행
+        // 현재 Day가 시작된 후 TimeManager의 currentDayTime이 360초가 될 때까지 대기합니다.
+        yield return new WaitUntil(() => TimeManager.Instance.currentDayTime >= 360f);
 
         // 스테이지 초기화 시작
         InitializeStage(day);
@@ -171,7 +187,10 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("Setting current day to: " + day);
         saveData.currentDay = day;
-        InitializeStage(day);
+        // 새 Day로 전환할 때 TimeManager를 리셋합니다.
+        TimeManager.Instance.ResetDayTime();
+
+        StartCoroutine(StartDayTransition(day));
     }
 
     /// <summary>
@@ -230,10 +249,13 @@ public class StageManager : MonoBehaviour
         PlayerSaveData playerData = PlayerSaveManager.Instance.LoadPlayerData();
         playerData.playerCurrencyData.AddCurrency(goldReward, woodReward, stoneReward);
         PlayerSaveManager.Instance.SavePlayerData(playerData);
-
         UpdateDisplay();
 
-        Debug.Log(playerData);
+        // 보스 처치 시 TimeManager에 알림
+        TimeManager.Instance.OnBossDefeated();
+
+        // 새 Day 시작을 위해 TimeManager의 시간을 리셋합니다.
+        TimeManager.Instance.ResetDayTime();
 
         // 다음 Day 진행: currentDay 증가 및 새 DayRecord 생성
         saveData.currentDay++;
@@ -271,5 +293,29 @@ public class StageManager : MonoBehaviour
 
         // 스프라이트 태그를 사용하여 아이콘과 숫자를 표시합니다.
         currencyText.text = $"<sprite name=\"{goldSpriteName}\"> {gold}\n<sprite name=\"{woodSpriteName}\"> {wood}\n<sprite name=\"{stoneSpriteName}\"> {stone}";
+    }
+
+    /// <summary>
+    /// 타임 시스템에 의해 보스가 제때 처치되지 않았을 때 호출됩니다.
+    /// 모든 진행 데이터를 초기화하고 Day 1로 돌아갑니다.
+    /// </summary>
+    public void ResetToDay1()
+    {
+        Debug.Log("Resetting to Day 1 due to boss failure.");
+        // GameSaveData 리셋: currentDay를 1로, dayRecords 초기화
+        saveData.currentDay = 1;
+        saveData.dayRecords.Clear();
+        DayRecordData firstDay = new DayRecordData();
+        firstDay.day = 1;
+        firstDay.bossCleared = false;
+        saveData.dayRecords.Add(firstDay);
+        SaveManager.Instance.SaveGame(saveData);
+
+        // 새 Day 시작 전에 TimeManager의 시간 리셋
+        TimeManager.Instance.ResetDayTime();
+        ClearCurrentEnemies();
+
+        // Stage 재설정
+        SetCurrentDay(1);
     }
 }
