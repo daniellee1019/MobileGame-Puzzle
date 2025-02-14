@@ -189,6 +189,8 @@ MonoBehaviour:
   target: {fileID: 546455830081667283, guid: 0df6de6bd08a5ab4995a2aa144c10e9a, type: 3}
   healthBar: {fileID: 4200143844749005099}
   popupHeightOffset: 16
+  knockbackForce: 5
+  knockbackDuration: 2
 --- !u!1 &1088256926929212
 GameObject:
   m_ObjectHideFlags: 0

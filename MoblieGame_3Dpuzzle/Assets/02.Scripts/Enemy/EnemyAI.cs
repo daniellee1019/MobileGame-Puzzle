@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,13 @@ public class EnemyAI : MonoBehaviour
     [Header("데미지 팝업 관련")]
     public float popupHeightOffset = 2f;  // 적 머리 위 어느 정도 오프셋
 
+    [Header("넉백 관련")]
+    public float knockbackForce = 5f;
+    public float knockbackDuration = 0.5f;
+    private bool isKnockedBack = false;
+
     private float currentHealth;
+    private Animator anim;
 
     void Start()
     {
@@ -19,6 +26,8 @@ public class EnemyAI : MonoBehaviour
 
         // 터렛을 ObjectManager에서 가져옴
         target = ObjectManager.Instance.turret.transform;
+
+        anim = GetComponent<Animator>();
 
         InitializeEnemy(); // 적을 초기화
     }
@@ -34,8 +43,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // 포탑을 향해 천천히 이동
-        if (target != null)
+        if (!isKnockedBack && target != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position += direction * enemyStats.speed * Time.deltaTime;
@@ -110,4 +118,32 @@ public class EnemyAI : MonoBehaviour
         // 적 사망 시 추가 효과(사운드, 애니메이션 등)를 넣을 수 있음
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Vector3 knockbackDir = (transform.position - collision.transform.position).normalized;
+            StartCoroutine(KnockbackRoutine(knockbackDir));
+            collision.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator KnockbackRoutine(Vector3 direction)
+    {
+        isKnockedBack = true;
+        anim.SetTrigger("isKnockBack"); // 넉백 애니메이션 트리거 실행
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < knockbackDuration)
+        {
+            transform.position += direction * knockbackForce * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        isKnockedBack = false;
+    }
 }
+

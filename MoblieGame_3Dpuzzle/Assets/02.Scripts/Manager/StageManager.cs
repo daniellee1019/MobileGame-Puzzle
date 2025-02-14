@@ -115,7 +115,7 @@ public class StageManager : MonoBehaviour
         #endregion
 
         // 새 Day 시작 시 TimeManager의 시간을 초기화
-        TimeManager.Instance.ResetDayTime();
+        //TimeManager.Instance.ResetDayTime();
 
         // 여기서 보스 웨이브(적 소환)는 게임 내 시간이 12시(360초)에 도달한 후에 진행
         // 현재 Day가 시작된 후 TimeManager의 currentDayTime이 360초가 될 때까지 대기합니다.
