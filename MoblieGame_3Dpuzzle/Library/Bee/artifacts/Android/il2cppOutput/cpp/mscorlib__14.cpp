@@ -6189,7 +6189,7 @@ IL_004d:
 IL_006c:
 	{
 		String_t* L_17;
-		L_17 = VirtualFuncInvoker0< String_t* >::Invoke(8, __this);
+		L_17 = VirtualFuncInvoker0< String_t* >::Invoke(9, __this);
 		if (!L_17)
 		{
 			goto IL_0086;
@@ -6200,7 +6200,7 @@ IL_006c:
 		String_t* L_19;
 		L_19 = Environment_get_NewLine_m8BF68A4EFDAFFB66500984CE779629811BA98FFF(NULL);
 		String_t* L_20;
-		L_20 = VirtualFuncInvoker0< String_t* >::Invoke(8, __this);
+		L_20 = VirtualFuncInvoker0< String_t* >::Invoke(9, __this);
 		String_t* L_21;
 		L_21 = String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B(L_18, L_19, L_20, NULL);
 		V_0 = L_21;
@@ -6558,7 +6558,7 @@ IL_004d:
 IL_006c:
 	{
 		String_t* L_17;
-		L_17 = VirtualFuncInvoker0< String_t* >::Invoke(8, __this);
+		L_17 = VirtualFuncInvoker0< String_t* >::Invoke(9, __this);
 		if (!L_17)
 		{
 			goto IL_0086;
@@ -6569,7 +6569,7 @@ IL_006c:
 		String_t* L_19;
 		L_19 = Environment_get_NewLine_m8BF68A4EFDAFFB66500984CE779629811BA98FFF(NULL);
 		String_t* L_20;
-		L_20 = VirtualFuncInvoker0< String_t* >::Invoke(8, __this);
+		L_20 = VirtualFuncInvoker0< String_t* >::Invoke(9, __this);
 		String_t* L_21;
 		L_21 = String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B(L_18, L_19, L_20, NULL);
 		V_0 = L_21;

@@ -7,6 +7,8 @@ TagManager:
   - OutLine
   - UIButton
   - Obstacle
+  - ChangeCam
+  - CameraZone
   layers:
   - Default
   - TransparentFX

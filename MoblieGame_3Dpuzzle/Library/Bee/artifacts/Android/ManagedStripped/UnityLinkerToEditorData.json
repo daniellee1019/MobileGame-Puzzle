@@ -137,6 +137,12 @@
             "icon": null
           },
           {
+            "name": "AudioMixer",
+            "scenes": [],
+            "dependencyType": 0,
+            "icon": null
+          },
+          {
             "name": "AudioSource",
             "scenes": [],
             "dependencyType": 0,
@@ -535,6 +541,12 @@
             "name": "TimeManager",
             "scenes": [],
             "dependencyType": 1,
+            "icon": null
+          },
+          {
+            "name": "TrailRenderer",
+            "scenes": [],
+            "dependencyType": 0,
             "icon": null
           },
           {
@@ -1254,7 +1266,9 @@
           },
           {
             "name": "CanvasGroup",
-            "scenes": [],
+            "scenes": [
+              "Assets/01.Scenes/SampleScene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
