@@ -405,6 +405,7 @@
 "Assets/02.Scripts/Mirror/RefractingMirror.cs"
 "Assets/02.Scripts/Mirror/RotationGizmo.cs"
 "Assets/02.Scripts/Mobile/JoystickHandler.cs"
+"Assets/02.Scripts/Obstacle/Obstacle.cs"
 "Assets/02.Scripts/Player/PlayerModeController.cs"
 "Assets/02.Scripts/Player/PlayerMovement.cs"
 "Assets/02.Scripts/Stage/Stage.cs"

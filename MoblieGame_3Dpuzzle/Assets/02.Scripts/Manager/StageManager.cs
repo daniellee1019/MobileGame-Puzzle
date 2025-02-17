@@ -35,6 +35,8 @@ public class StageManager : MonoBehaviour
     public string woodSpriteName = "WoodIcon";
     public string stoneSpriteName = "StoneIcon";
 
+    [Header("Obstacle Settings")]
+    public ObsSpawnerManager obstacleSpawner; // 장애물 스포너 추가
 
     private void Awake()
     {
@@ -114,8 +116,8 @@ public class StageManager : MonoBehaviour
         dayText.gameObject.SetActive(false);
         #endregion
 
-        // 새 Day 시작 시 TimeManager의 시간을 초기화
-        //TimeManager.Instance.ResetDayTime();
+        // 새로운 장애물 생성
+        obstacleSpawner.GenerateObstacles();
 
         // 여기서 보스 웨이브(적 소환)는 게임 내 시간이 12시(360초)에 도달한 후에 진행
         // 현재 Day가 시작된 후 TimeManager의 currentDayTime이 360초가 될 때까지 대기합니다.

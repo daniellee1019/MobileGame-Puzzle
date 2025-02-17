@@ -12,10 +12,14 @@ public class ObsSpawnerManager : MonoBehaviour
 
     private int[,] grid;
 
+    // 장애물 풀링용 큐 (FIFO 방식)
+    private Queue<GameObject> pooledSingleTileObstacles = new Queue<GameObject>();
+    private Queue<GameObject> pooledDoubleTileObstacles = new Queue<GameObject>();
+
     void Start()
     {
         grid = new int[gridSizeX, gridSizeY];
-        GenerateObstacles();
+        //GenerateObstacles();
     }
 
     /// <summary>
@@ -71,7 +75,45 @@ public class ObsSpawnerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 1칸짜리 장애물을 랜덤 위치에 배치
+    /// 풀에서 1칸 장애물 오브젝트를 반환합니다. 없으면 새로 인스턴스화합니다.
+    /// </summary>
+    private GameObject GetSingleTileObstacle()
+    {
+        if (pooledSingleTileObstacles.Count > 0)
+        {
+            GameObject obj = pooledSingleTileObstacles.Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
+        else
+        {
+            GameObject prefab = singleTileObstacles[Random.Range(0, singleTileObstacles.Length)];
+            GameObject obj = Instantiate(prefab, spawnArea);
+            return obj;
+        }
+    }
+
+    /// <summary>
+    /// 풀에서 2칸 장애물 오브젝트를 반환합니다. 없으면 새로 인스턴스화합니다.
+    /// </summary>
+    private GameObject GetDoubleTileObstacle()
+    {
+        if (pooledDoubleTileObstacles.Count > 0)
+        {
+            GameObject obj = pooledDoubleTileObstacles.Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
+        else
+        {
+            GameObject prefab = doubleTileObstacles[Random.Range(0, doubleTileObstacles.Length)];
+            GameObject obj = Instantiate(prefab, spawnArea);
+            return obj;
+        }
+    }
+
+    /// <summary>
+    /// 1칸 장애물을 랜덤 위치에 배치
     /// </summary>
     private void PlaceSingleTileObstacles(List<Vector2Int> availablePositions)
     {
@@ -82,11 +124,12 @@ public class ObsSpawnerManager : MonoBehaviour
             int randomIndex = Random.Range(0, availablePositions.Count);
             Vector2Int pos = availablePositions[randomIndex];
 
-            GameObject obstaclePrefab = singleTileObstacles[Random.Range(0, singleTileObstacles.Length)];
+            GameObject obstacle = GetSingleTileObstacle();
 
             // 장애물 위치를 중앙 정렬하여 배치
             Vector3 spawnPosition = spawnArea.position + new Vector3(pos.x * cellSize + cellSize / 2, 0, pos.y * cellSize + cellSize / 2);
-            Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity, spawnArea);
+            obstacle.transform.position = spawnPosition;
+            obstacle.transform.rotation = Quaternion.identity;
 
             grid[pos.x, pos.y] = 1;
             availablePositions.RemoveAt(randomIndex);
@@ -94,51 +137,43 @@ public class ObsSpawnerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 2칸짜리 장애물을 랜덤 위치에 배치 (가로/세로 방향 고려)
+    /// 2칸 장애물을 랜덤 위치에 배치 (가로/세로 방향 고려)
     /// </summary>
     private void PlaceDoubleTileObstacles(List<Vector2Int> availablePositions)
     {
-        int obstacleCount = Random.Range(2, 4); // 배치할 장애물 개수 랜덤 결정
+        int obstacleCount = Random.Range(2, 4);
         for (int i = 0; i < obstacleCount; i++)
         {
-            if (availablePositions.Count < 2) break; // 최소 2칸 필요
-            int randomIndex = Random.Range(0, availablePositions.Count); // 랜덤한 위치 선택
+            if (availablePositions.Count < 2) break;
+            int randomIndex = Random.Range(0, availablePositions.Count);
             Vector2Int pos = availablePositions[randomIndex];
 
-            // 장애물을 가로 또는 세로로 배치할지 랜덤 결정
             bool isHorizontal = Random.value > 0.5f;
             Vector2Int secondPos = isHorizontal ? new Vector2Int(pos.x + 1, pos.y) : new Vector2Int(pos.x, pos.y + 1);
 
-            if (IsPositionAvailable(secondPos)) // 두 번째 칸이 비어있는 경우 배치 진행
+            if (IsPositionAvailable(secondPos))
             {
-                // 랜덤한 2칸짜리 장애물 프리팹 선택
-                GameObject obstaclePrefab = doubleTileObstacles[Random.Range(0, doubleTileObstacles.Length)];
+                GameObject obstacle = GetDoubleTileObstacle();
 
                 // 두 칸의 중앙 위치를 기준으로 배치
                 float centerX = (pos.x + secondPos.x) / 2f * cellSize;
                 float centerY = (pos.y + secondPos.y) / 2f * cellSize;
                 Vector3 spawnPosition = spawnArea.position + new Vector3(centerX + cellSize / 2, 0, centerY + cellSize / 2);
 
-                // 장애물 생성
-                GameObject obstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity, spawnArea);
-
-                // 방향에 따라 정확한 회전 적용
+                obstacle.transform.position = spawnPosition;
                 if (isHorizontal)
                 {
-                    // 가로 방향: 기본 회전 유지 (0도)
                     obstacle.transform.rotation = Quaternion.identity;
                 }
                 else
                 {
-                    // 세로 방향: 90도 회전
                     obstacle.transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
 
-                // 두 번째 칸을 장애물 위치로 인식
                 grid[pos.x, pos.y] = 1;
                 grid[secondPos.x, secondPos.y] = 1;
 
-                availablePositions.Remove(pos); // 사용한 위치 제거
+                availablePositions.Remove(pos);
                 availablePositions.Remove(secondPos);
             }
         }
@@ -151,15 +186,39 @@ public class ObsSpawnerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 기존 장애물을 삭제하고 그리드를 초기화
+    /// 기존 장애물을 삭제하고, 장애물 오브젝트들을 풀에 반환합니다.
     /// </summary>
     private void ClearObstacles()
     {
         foreach (Transform child in spawnArea)
         {
-            Destroy(child.gameObject);
+            ReturnObstacleToPool(child.gameObject);
         }
         grid = new int[gridSizeX, gridSizeY];
+    }
+
+    /// <summary>
+    /// 장애물 오브젝트를 비활성화하고, 해당 타입의 풀(Queue)에 반환합니다.
+    /// </summary>
+    private void ReturnObstacleToPool(GameObject obstacle)
+    {
+        Obstacle obs = obstacle.GetComponent<Obstacle>();
+        if (obs != null)
+        {
+            obstacle.SetActive(false);
+            if (obs.obstacleSize == Obstacle.ObstacleSize.Single)
+            {
+                pooledSingleTileObstacles.Enqueue(obstacle);
+            }
+            else if (obs.obstacleSize == Obstacle.ObstacleSize.Double)
+            {
+                pooledDoubleTileObstacles.Enqueue(obstacle);
+            }
+        }
+        else
+        {
+            Destroy(obstacle);
+        }
     }
 
     // Scene 창에서 그리드를 그리는 기능 추가

@@ -1373,6 +1373,7 @@ MonoBehaviour:
   goldSpriteName: GoldIcon
   woodSpriteName: WoodIcon
   stoneSpriteName: StoneIcon
+  obstacleSpawner: {fileID: 1639536818}
 --- !u!114 &424922096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3853,11 +3854,6 @@ MonoBehaviour:
   timeBarFill: {fileID: 1319718782}
   warningPanel: {fileID: 1903500061}
   timeText: {fileID: 1824870582}
-  timeBar: {fileID: 1672182992}
-  toggleButton: {fileID: 2106809193}
-  slideDuration: 0.5
-  shownX: 0
-  hiddenX: -300
 --- !u!114 &1672182994
 MonoBehaviour:
   m_ObjectHideFlags: 0
