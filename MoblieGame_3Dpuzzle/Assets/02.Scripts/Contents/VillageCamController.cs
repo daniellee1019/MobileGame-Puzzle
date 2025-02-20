@@ -1,37 +1,45 @@
 using UnityEngine;
+using Cinemachine;
 using DG.Tweening;
 
 public class VillageCamController : MonoBehaviour
 {
+    [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private float perspectiveZoomSpeed = 0.5f;
-    [SerializeField] private float orthoZoomSpeed = 0.5f;  // 줌 속도 조절
+    [SerializeField] private float orthoZoomSpeed = 0.5f;
     [SerializeField] private float moveSpeed = 0.005f;
-    [SerializeField] private float smoothTime = 0.3f; // 이동 애니메이션 지속 시간
-    [SerializeField] private float zoomDuration = 0.2f; // 줌 애니메이션 지속 시간
+    [SerializeField] private float smoothTime = 0.3f;
+    [SerializeField] private float zoomDuration = 0.2f;
 
-    private Camera cam;
     private Tween moveTween;
     private Tween zoomTween;
-    private Vector3 lastMousePosition;
-    private bool isRightMouseHeld = false;
+    private bool isZooming = false;
+    private bool isMoving = false;
 
-    void Start()
+    // 카메라 이동 제한 값
+    private readonly float minX = -45f;
+    private readonly float maxX = 45f;
+    private readonly float minZ = -130f;
+    private readonly float maxZ = -50f;
+
+    private void Start()
     {
-        cam = GetComponent<Camera>();
+        if (virtualCam == null)
+        {
+            Debug.LogError("[VillageCamController] Cinemachine Virtual Camera가 할당되지 않았습니다.");
+        }
     }
 
-    void Update()
+    private void Update()
     {
         HandleTouchPan();
         HandleTouchZoom();
-        HandleMouseZoomWithRightClick();
     }
 
     /// <summary>
-    /// 터치 드래그 이동 (한 손가락) - 화면 기준으로 수평 이동
-    /// DOTween을 사용하여 자연스럽게 이동
+    /// 터치 드래그 이동 (한 손가락) - 터치가 없으면 즉시 멈추고, 이동 범위 제한 적용
     /// </summary>
-    void HandleTouchPan()
+    private void HandleTouchPan()
     {
         if (Input.touchCount == 1)
         {
@@ -40,25 +48,43 @@ public class VillageCamController : MonoBehaviour
             {
                 Vector2 touchDelta = touch.deltaPosition;
 
-                // 월드 좌표 기준으로 이동 방향 결정
-                Vector3 moveDirection = (-touchDelta.x * moveSpeed * transform.right) +
-                                        (-touchDelta.y * moveSpeed * Vector3.forward); // 화면 기준 수평 이동
+                // Transform을 직접 이동하여 Cinemachine의 Follow 없이 이동 가능하도록 설정
+                Vector3 moveDirection = (-touchDelta.x * moveSpeed * Vector3.right) +
+                                        (-touchDelta.y * moveSpeed * Vector3.forward);
 
                 // 기존 이동 애니메이션이 있다면 취소
                 moveTween?.Kill();
+                isMoving = true;
+
+                // 목표 위치 계산
+                Vector3 targetPosition = transform.position + moveDirection;
+
+                // 이동 범위 제한 적용
+                targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
+                targetPosition.z = Mathf.Clamp(targetPosition.z, minZ, maxZ);
 
                 // DOTween으로 부드러운 이동 (현재 위치에서 이동)
-                moveTween = transform.DOMove(transform.position + moveDirection, smoothTime).SetEase(Ease.OutQuad);
+                moveTween = transform.DOMove(targetPosition, smoothTime)
+                                     .SetEase(Ease.OutQuad)
+                                     .OnComplete(() => isMoving = false);
             }
+        }
+
+        // 터치가 없을 경우 이동을 즉시 멈춤
+        if (Input.touchCount == 0 && isMoving)
+        {
+            moveTween?.Kill();
+            isMoving = false;
         }
     }
 
     /// <summary>
-    /// 터치 핀치 줌 (두 손가락)
-    /// DOTween으로 줌 부드럽게 애니메이션 적용
+    /// 터치 핀치 줌 (두 손가락) - 터치가 없으면 줌을 즉시 멈춤
     /// </summary>
-    void HandleTouchZoom()
+    private void HandleTouchZoom()
     {
+        if (virtualCam == null) return;
+
         if (Input.touchCount == 2)
         {
             Touch touchZero = Input.GetTouch(0);
@@ -71,65 +97,64 @@ public class VillageCamController : MonoBehaviour
             float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
+            // 줌 동작 중 플래그 활성화
+            isZooming = true;
+
             // 기존 줌 애니메이션이 있다면 취소
             zoomTween?.Kill();
 
-            if (cam.orthographic)
+            if (virtualCam.m_Lens.Orthographic)
             {
-                float newSize = Mathf.Clamp(cam.orthographicSize + deltaMagnitudeDiff * orthoZoomSpeed, 1f, 20f);
-                zoomTween = DOTween.To(() => cam.orthographicSize, x => cam.orthographicSize = x, newSize, zoomDuration)
-                    .SetEase(Ease.OutQuad);
+                float newSize = Mathf.Clamp(virtualCam.m_Lens.OrthographicSize + deltaMagnitudeDiff * orthoZoomSpeed, 1f, 20f);
+                zoomTween = DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, newSize, zoomDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() => isZooming = false);
             }
             else
             {
-                float newFOV = Mathf.Clamp(cam.fieldOfView + deltaMagnitudeDiff * perspectiveZoomSpeed, 10f, 90f);
-                zoomTween = DOTween.To(() => cam.fieldOfView, x => cam.fieldOfView = x, newFOV, zoomDuration)
-                    .SetEase(Ease.OutQuad);
+                float newFOV = Mathf.Clamp(virtualCam.m_Lens.FieldOfView + deltaMagnitudeDiff * perspectiveZoomSpeed, 10f, 90f);
+                zoomTween = DOTween.To(() => virtualCam.m_Lens.FieldOfView, x => virtualCam.m_Lens.FieldOfView = x, newFOV, zoomDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() => isZooming = false);
             }
         }
-    }
 
-    /// <summary>
-    /// 마우스 우클릭 후 이동 시 줌 (휠 대신 사용)
-    /// </summary>
-    void HandleMouseZoomWithRightClick()
-    {
-        if (Input.GetMouseButtonDown(1)) // 우클릭 시작
+        // 터치가 없을 경우 줌을 멈춤
+        if (Input.touchCount == 0 && isZooming)
         {
-            isRightMouseHeld = true;
-            lastMousePosition = Input.mousePosition;
-        }
-        else if (Input.GetMouseButtonUp(1)) // 우클릭 해제
-        {
-            isRightMouseHeld = false;
+            zoomTween?.Kill();
+            isZooming = false;
         }
 
-        if (isRightMouseHeld)
+#if UNITY_EDITOR
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(scroll) > 0.01f)
         {
-            Vector3 currentMousePosition = Input.mousePosition;
-            float deltaX = currentMousePosition.x - lastMousePosition.x; // 좌우 이동량 계산
-            lastMousePosition = currentMousePosition;
+            isZooming = true;
+            zoomTween?.Kill();
 
-            if (Mathf.Abs(deltaX) > 1f) // 너무 작은 움직임 무시
+            if (virtualCam.m_Lens.Orthographic)
             {
-                // 기존 줌 애니메이션이 있다면 취소
-                zoomTween?.Kill();
-
-                float zoomAmount = deltaX * perspectiveZoomSpeed; // 이동량을 줌 값으로 변환
-
-                if (cam.orthographic)
-                {
-                    float newSize = Mathf.Clamp(cam.orthographicSize - zoomAmount, 1f, 20f);
-                    zoomTween = DOTween.To(() => cam.orthographicSize, x => cam.orthographicSize = x, newSize, zoomDuration)
-                        .SetEase(Ease.OutQuad);
-                }
-                else
-                {
-                    float newFOV = Mathf.Clamp(cam.fieldOfView - zoomAmount, 10f, 90f);
-                    zoomTween = DOTween.To(() => cam.fieldOfView, x => cam.fieldOfView = x, newFOV, zoomDuration)
-                        .SetEase(Ease.OutQuad);
-                }
+                float newSize = Mathf.Clamp(virtualCam.m_Lens.OrthographicSize - scroll * orthoZoomSpeed * 10f, 1f, 20f);
+                zoomTween = DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, newSize, zoomDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() => isZooming = false);
+            }
+            else
+            {
+                float newFOV = Mathf.Clamp(virtualCam.m_Lens.FieldOfView - scroll * perspectiveZoomSpeed * 100f, 10f, 90f);
+                zoomTween = DOTween.To(() => virtualCam.m_Lens.FieldOfView, x => virtualCam.m_Lens.FieldOfView = x, newFOV, zoomDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() => isZooming = false);
             }
         }
+
+        // 마우스 휠 줌이 끝나면 줌을 멈춤
+        if (Mathf.Abs(scroll) < 0.01f && isZooming)
+        {
+            zoomTween?.Kill();
+            isZooming = false;
+        }
+#endif
     }
 }

@@ -85,6 +85,9 @@ public class UIToggleManager : MonoBehaviour
                     case "timeText":
                         HideUIElement("timeText");
                         break;
+                    case "buildBar":
+                        HideUIElement("buildBar");
+                        break;
                         // 필요시 다른 UI 이름도 추가
                 }
             }
