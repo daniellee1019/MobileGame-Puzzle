@@ -21,6 +21,12 @@ public class UIToggleManager : MonoBehaviour
     public GameObject defensePanel;      // 방어 패널
     public GameObject otherPanel;   // 생산 패널
 
+    [Header("Build Button Settings")]
+    public GameObject constructionButton; // 건설 패널 (하단 UI)
+    public GameObject productionButton;   // 생산 패널
+    public GameObject defenseButton;      // 방어 패널
+    public GameObject otherButton;   // 생산 패널
+
     [System.Serializable]
     public class UIToggleItem
     {
@@ -198,20 +204,30 @@ public class UIToggleManager : MonoBehaviour
         defensePanel.SetActive(false);
         otherPanel.SetActive(false);
 
+        // 모든 버튼을 숨김
+        constructionButton.SetActive(false);
+        productionButton.SetActive(false);
+        defenseButton.SetActive(false);
+        otherButton.SetActive(false);
+
         // 선택한 패널만 활성화
         switch (category)
         {
             case "Construction_PN":
                 constructionPanel.SetActive(true);
+                constructionButton.SetActive(true);
                 break;
             case "Production_PN":
                 productionPanel.SetActive(true);
+                productionButton.SetActive(true);
                 break;
             case "Defense_PN":
                 defensePanel.SetActive(true);
+                defenseButton.SetActive(true);
                 break;
             case "Other_PN":
                 otherPanel.SetActive(true);
+                otherButton.SetActive(true);
                 break;
         }
     }
